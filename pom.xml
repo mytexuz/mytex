@@ -21,11 +21,12 @@
         <random.beans.version>3.9.0</random.beans.version>
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <jackson-dataformat-yaml.version>2.13.4</jackson-dataformat-yaml.version>
-        <jacoco.version>0.8.5</jacoco.version>
+        <jacoco.version>0.8.8</jacoco.version>
         <sonar.organization>mytexuz</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.tests>src/test/groovy</sonar.tests>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <dependencies>
@@ -52,6 +53,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
+            <version>4.8.0</version>
         </dependency>
 
         <dependency>
@@ -64,6 +66,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+            <version>42.3.7</version>
             <scope>runtime</scope>
         </dependency>
 
