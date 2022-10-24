@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Permissions table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: permissions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: id of the permission record
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                  remarks: name of the permission
+              - column:
+                  name: description
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+                  remarks: description of the permission
+              - column:
+                  name: created_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: who created permission record
+              - column:
+                  name: last_modified_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: permission who modified the record lastly
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created date and time of the permission
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated date and time of the permission
+            remarks: Table for storing permissions

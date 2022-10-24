@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Groups table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: groups
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: id of the group record
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                  remarks: name of the group
+              - column:
+                  name: description
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+                  remarks: description of the group
+              - column:
+                  name: created_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: who created group record
+              - column:
+                  name: last_modified_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: group who modified the record lastly
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created date and time of the group
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated date and time of the group
+            remarks: Table for storing groups

@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Devices table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: devices
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: id of the device record
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                  remarks: name of the device
+              - column:
+                  name: mac_address
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                  remarks: mac_address of the device
+              - column:
+                  name: device_id
+                  type: bigint
+                  remarks: device_id of the device
+              - column:
+                  name: created_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: who created device record
+              - column:
+                  name: last_modified_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: device who modified the record lastly
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created date and time of the device
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated date and time of the device
+            remarks: Table for storing devices
