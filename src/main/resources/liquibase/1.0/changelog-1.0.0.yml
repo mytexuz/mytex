@@ -1,0 +1,77 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Users table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the user record
+              - column:
+                  name: first_name
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+                  remarks: first name of the user
+              - column:
+                  name: last_name
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+                  remarks: last name of the user
+              - column:
+                  name: phone_number
+                  type: varchar(32)
+                  remarks: phone number of the user
+              - column:
+                  name: photo
+                  type: varchar(128)
+                  remarks: image of the user
+              - column:
+                  name: password
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+                  remarks: secret key of the user
+              - column:
+                  name: username
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+                    unique: true
+                  remarks: unique username of the user
+              - column:
+                  name: status
+                  type: boolean
+                  remarks: status of the user
+              - column:
+                  name: created_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: who created user record
+              - column:
+                  name: last_modified_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: user who modified the record lastly
+              - column:
+                  name: created_time
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created date and time of the user
+              - column:
+                  name: updated_time
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated date and time of the user
+            remarks: Table for storing users
