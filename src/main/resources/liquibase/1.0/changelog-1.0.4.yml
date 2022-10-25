@@ -12,7 +12,7 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  remarks: id of the session record
+                  remarks: unique id of the session record
               - column:
                   name: device_id
                   type: bigint
@@ -28,7 +28,7 @@ databaseChangeLog:
               - column:
                   name: token
                   type: varchar
-                  remarks: token of the session record
+                  remarks: access of the session record
               - column:
                   name: status
                   type: boolean

@@ -13,7 +13,7 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  remarks: id of the user groups record
+                  remarks: unique id of the user groups record
               - column:
                   name: group_id
                   type: bigint

@@ -13,13 +13,13 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  remarks: id of the permission record
+                  remarks: unique id of the permission record
               - column:
                   name: name
                   type: varchar(32)
                   constraints:
                     nullable: false
-                  remarks: name of the permission
+                  remarks: title of the permission
               - column:
                   name: description
                   type: varchar(128)

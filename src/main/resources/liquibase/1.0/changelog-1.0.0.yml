@@ -13,43 +13,44 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  remarks: id of the user record
+                  remarks: unique id of the user record
               - column:
                   name: first_name
                   type: varchar(32)
                   constraints:
                     nullable: false
-                  remarks: first_name of the user
+                  remarks: first name of the user
               - column:
                   name: last_name
                   type: varchar(32)
                   constraints:
                     nullable: false
-                  remarks: last_name of the user
+                  remarks: last name of the user
               - column:
                   name: phone_number
                   type: varchar(32)
                   constraints:
                     nullable: false
-                  remarks: phone_number of the user
+                  remarks: phone number of the user
               - column:
                   name: photo
                   type: varchar
                   constraints:
                     nullable: false
-                  remarks: photo of the user
+                  remarks: image of the user
               - column:
                   name: password
                   type: varchar
                   constraints:
                     nullable: false
-                  remarks: password of the user
+                  remarks: secret key of the user
               - column:
                   name: username
                   type: varchar(32)
                   constraints:
                     nullable: false
-                  remarks: username of the user
+                    unique: true
+                  remarks: unique username of the user
               - column:
                   name: status
                   type: boolean
