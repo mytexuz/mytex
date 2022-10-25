@@ -8,7 +8,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: unique_id
-                  type: uuid
+                  type: varchar
                   constraints:
                     primaryKey: true
                     nullable: false
