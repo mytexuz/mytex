@@ -37,7 +37,7 @@ databaseChangeLog:
                   defaultValue: -1
                   remarks: group who modified the record lastly
               - column:
-                  name: created_at
+                  name: created_time
                   type: timestamp
                   defaultValue: now()
                   constraints:
@@ -45,7 +45,7 @@ databaseChangeLog:
                     updatable: false
                   remarks: created date and time of the group
               - column:
-                  name: updated_at
+                  name: updated_time
                   type: timestamp
                   defaultValue: now()
                   remarks: updated date and time of the group

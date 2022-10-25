@@ -2,7 +2,6 @@ package uz.enterprise.mytex.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import uz.enterprise.mytex.entity.audit.Auditable;
 
 import javax.persistence.*;
 
@@ -16,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "sessions")
-public class Session extends Auditable {
+public class Session {
     @Id
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @GeneratedValue(generator = "uuid2")
