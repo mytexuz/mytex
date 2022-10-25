@@ -1,10 +1,13 @@
 package uz.enterprise.mytex.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -51,4 +54,34 @@ public class User extends Auditable {
 
     @Column(name = "status", nullable = false)
     private boolean status;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    private Session session;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    private UserGroup userGroup;
+
+    public void setSession(Session session) {
+        if (session == null) {
+            if (this.session != null) {
+                this.session.setUser(null);
+            }
+        } else {
+            session.setUser(this);
+        }
+        this.session = session;
+    }
+
+    public void setUserGroup(UserGroup userGroup) {
+        if (userGroup == null) {
+            if (this.userGroup != null) {
+                this.userGroup.setUser(null);
+            }
+        } else {
+            userGroup.setUser(this);
+        }
+        this.userGroup = userGroup;
+    }
 }
