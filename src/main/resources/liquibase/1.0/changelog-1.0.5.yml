@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create User Groups table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: user_groups
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the user groups record
+              - column:
+                  name: group_id
+                  type: bigint
+                  remarks: id of the group
+              - column:
+                  name: user_id
+                  type: bigint
+                  remarks: id of the user groups
+              - column:
+                  name: created_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: who created user groups record
+              - column:
+                  name: last_modified_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: user groups who modified the record lastly
+              - column:
+                  name: created_time
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created date and time of the user groups
+              - column:
+                  name: updated_time
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated date and time of the user groups
+            remarks: Table for storing user groups
+        - addForeignKeyConstraint:
+            baseTableName: user_groups
+            baseColumnNames: group_id
+            constraintName: users_group_group_fk
+            referencedTableName: groups
+            referencedColumnNames: id
+            deferrable:  true
+        - addForeignKeyConstraint:
+            baseTableName: user_groups
+            baseColumnNames: user_id
+            constraintName: users_group_user_fk
+            referencedTableName: users
+            referencedColumnNames: id
+            deferrable:  true
