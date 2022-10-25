@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: Create Devices table
+      id: Create Permissions table
       author: Zuhriddin Shamsiddinov
       changes:
         - createTable:
-            tableName: devices
+            tableName: permissions
             columns:
               - column:
                   name: id
@@ -13,33 +13,29 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  remarks: id of the device record
+                  remarks: id of the permission record
               - column:
                   name: name
-                  type: varchar(50)
+                  type: varchar(32)
                   constraints:
                     nullable: false
-                  remarks: name of the device
+                  remarks: name of the permission
               - column:
-                  name: mac_address
-                  type: varchar(50)
+                  name: description
+                  type: varchar(128)
                   constraints:
                     nullable: false
-                  remarks: mac_address of the device
-              - column:
-                  name: device_id
-                  type: bigint
-                  remarks: device_id of the device
+                  remarks: description of the permission
               - column:
                   name: created_by
                   type: bigint
                   defaultValue: -1
-                  remarks: who created device record
+                  remarks: who created permission record
               - column:
                   name: last_modified_by
                   type: bigint
                   defaultValue: -1
-                  remarks: device who modified the record lastly
+                  remarks: permission who modified the record lastly
               - column:
                   name: created_time
                   type: timestamp
@@ -47,10 +43,10 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     updatable: false
-                  remarks: created date and time of the device
+                  remarks: created date and time of the permission
               - column:
                   name: updated_time
                   type: timestamp
                   defaultValue: now()
-                  remarks: updated date and time of the device
-            remarks: Table for storing devices
+                  remarks: updated date and time of the permission
+            remarks: Table for storing permissions

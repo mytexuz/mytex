@@ -27,5 +27,5 @@ public class Device extends Auditable {
     private String macAddress;
 
     @Column(name = "device_id", nullable = false)
-    private Long deviceId;
+    private String  deviceId;
 }
