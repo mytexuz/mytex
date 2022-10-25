@@ -29,18 +29,14 @@ databaseChangeLog:
               - column:
                   name: phone_number
                   type: varchar(32)
-                  constraints:
-                    nullable: false
                   remarks: phone number of the user
               - column:
                   name: photo
-                  type: varchar
-                  constraints:
-                    nullable: false
+                  type: varchar(128)
                   remarks: image of the user
               - column:
                   name: password
-                  type: varchar
+                  type: varchar(128)
                   constraints:
                     nullable: false
                   remarks: secret key of the user
@@ -54,7 +50,6 @@ databaseChangeLog:
               - column:
                   name: status
                   type: boolean
-                  defaultValue: false
                   remarks: status of the user
               - column:
                   name: created_by

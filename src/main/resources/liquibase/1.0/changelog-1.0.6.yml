@@ -17,14 +17,10 @@ databaseChangeLog:
               - column:
                   name: group_id
                   type: bigint
-                  constraints:
-                    nullable: false
                   remarks: id of the group
               - column:
                   name: permission_id
                   type: bigint
-                  constraints:
-                    nullable: false
                   remarks: id of the  permissions
               - column:
                   name: created_by

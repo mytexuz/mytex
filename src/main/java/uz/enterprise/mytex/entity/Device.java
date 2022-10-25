@@ -1,6 +1,5 @@
 package uz.enterprise.mytex.entity;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,19 +31,17 @@ public class Device extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "mac_address", nullable = false)
+    @Column(name = "mac_address")
     private String macAddress;
 
-    @Column(name = "device_id",columnDefinition = "varchar(64)")
+    @Column(name = "device_id", columnDefinition = "varchar(64)")
     private String deviceId;
-
     @OneToOne(mappedBy = "device", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, optional = false)
     private Session session;
-
     public void setSession(Session session) {
         if (session == null) {
             if (this.session != null) {
@@ -56,5 +52,4 @@ public class Device extends Auditable {
         }
         this.session = session;
     }
-
 }

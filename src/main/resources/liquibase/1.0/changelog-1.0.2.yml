@@ -22,9 +22,7 @@ databaseChangeLog:
                   remarks: title of the group
               - column:
                   name: description
-                  type: varchar(128)
-                  constraints:
-                    nullable: false
+                  type: text
                   remarks: explanation of the group
               - column:
                   name: created_by
