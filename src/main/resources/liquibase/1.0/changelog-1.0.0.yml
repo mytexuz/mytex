@@ -16,19 +16,19 @@ databaseChangeLog:
                   remarks: id of the user record
               - column:
                   name: first_name
-                  type: varchar(50)
+                  type: varchar(32)
                   constraints:
                     nullable: false
                   remarks: first_name of the user
               - column:
                   name: last_name
-                  type: varchar(50)
+                  type: varchar(32)
                   constraints:
                     nullable: false
                   remarks: last_name of the user
               - column:
                   name: phone_number
-                  type: varchar(30)
+                  type: varchar(32)
                   constraints:
                     nullable: false
                   remarks: phone_number of the user
@@ -46,7 +46,7 @@ databaseChangeLog:
                   remarks: password of the user
               - column:
                   name: username
-                  type: varchar(30)
+                  type: varchar(32)
                   constraints:
                     nullable: false
                   remarks: username of the user
