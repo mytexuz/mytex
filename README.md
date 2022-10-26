@@ -50,7 +50,7 @@ There are not any third party integrations yet...
 <details>
 <summary>ENDPOINTS</summary>
 
-### Card To Card
+### One To One
 
 **Method:** POST<br>
 **URI:** /v1/samples/sample<br>
