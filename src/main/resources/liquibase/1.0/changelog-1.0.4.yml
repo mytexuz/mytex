@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Sessions table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: sessions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the session record
+              - column:
+                  name: device_id
+                  type: bigint
+                  remarks: id of the device
+              - column:
+                  name: user_id
+                  type: bigint
+                  remarks: id of the user
+              - column:
+                  name: token
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+                  remarks: access of the session record
+              - column:
+                  name: status
+                  type: varchar(16)
+                  remarks: session status
+            remarks: Table for storing session
+        - addForeignKeyConstraint:
+            baseTableName: sessions
+            baseColumnNames: device_id
+            constraintName: sessions_device_fk
+            referencedTableName: devices
+            referencedColumnNames: id
+            deferrable: true
+        - addForeignKeyConstraint:
+            baseTableName: sessions
+            baseColumnNames: user_id
+            constraintName: sessions_user_fk
+            referencedTableName: users
+            referencedColumnNames: id
+            deferrable: true

@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Group Permissions table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: group_permissions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the group permissions record
+              - column:
+                  name: group_id
+                  type: bigint
+                  remarks: id of the group
+              - column:
+                  name: permission_id
+                  type: bigint
+                  remarks: id of the  permissions
+              - column:
+                  name: created_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: who created group permissions record
+              - column:
+                  name: last_modified_by
+                  type: bigint
+                  defaultValue: -1
+                  remarks: group permissions who modified the record lastly
+              - column:
+                  name: created_time
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created date and time of the group permissions
+              - column:
+                  name: updated_time
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated date and time of the group permissions
+            remarks: Table for storing group permissions
+        - addForeignKeyConstraint:
+            baseTableName: group_permissions
+            baseColumnNames: group_id
+            constraintName: group_permissions_group_fk
+            referencedTableName: groups
+            referencedColumnNames: id
+            deferrable:  true
+        - addForeignKeyConstraint:
+            baseTableName: group_permissions
+            baseColumnNames: permission_id
+            constraintName: group_permissions_permission_fk
+            referencedTableName: permissions
+            referencedColumnNames: id
+            deferrable:  true
