@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -60,7 +61,7 @@ public class User extends Auditable {
     private Session session;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, optional = false)
-    private UserGroup userGroup;
+    private UserRole userRole;
 
     public void setSession(Session session) {
         if (session == null) {
@@ -72,14 +73,19 @@ public class User extends Auditable {
         }
         this.session = session;
     }
-    public void setUserGroup(UserGroup userGroup) {
-        if (userGroup == null) {
-            if (this.userGroup != null) {
-                this.userGroup.setUser(null);
+
+    public void setUserRole(UserRole userRole) {
+        if (userRole == null) {
+            if (this.userRole != null) {
+                this.userRole.setUser(null);
             }
         } else {
-            userGroup.setUser(this);
+            userRole.setUser(this);
         }
-        this.userGroup = userGroup;
+        this.userRole = userRole;
+    }
+
+    public boolean getStatusBoolean() {
+        return this.status.equals(Status.ACTIVE);
     }
 }
