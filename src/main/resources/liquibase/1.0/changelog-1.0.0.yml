@@ -49,7 +49,7 @@ databaseChangeLog:
                   remarks: unique username of the user
               - column:
                   name: status
-                  type: boolean
+                  type: varchar(16)
                   remarks: status of the user
               - column:
                   name: created_by

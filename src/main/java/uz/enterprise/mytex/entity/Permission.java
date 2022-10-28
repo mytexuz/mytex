@@ -2,10 +2,14 @@ package uz.enterprise.mytex.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.Collection;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +27,7 @@ import uz.enterprise.mytex.entity.audit.Auditable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "permissions")
-public class Permission extends Auditable {
+public class Permission extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,4 +37,7 @@ public class Permission extends Auditable {
 
     @Column(name = "description")
     private String description;
+    public String getAuthority() {
+        return this.name;
+    }
 }

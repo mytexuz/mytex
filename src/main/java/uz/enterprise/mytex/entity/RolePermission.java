@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,17 +24,17 @@ import uz.enterprise.mytex.entity.audit.Auditable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_groups")
-public class UserGroup extends Auditable {
+@Table(name = "role_permissions")
+public class RolePermission extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    private Group group;
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "permission_id")
+    private Permission permission;
 }

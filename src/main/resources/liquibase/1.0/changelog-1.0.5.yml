@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: Create User Groups table
+      id: Create User Roles table
       author: Zuhriddin Shamsiddinov
       changes:
         - createTable:
-            tableName: user_groups
+            tableName: user_roles
             columns:
               - column:
                   name: id
@@ -13,25 +13,25 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  remarks: unique id of the user groups record
+                  remarks: unique id of the user roles record
               - column:
-                  name: group_id
+                  name: role_id
                   type: bigint
-                  remarks: id of the group
+                  remarks: id of the role
               - column:
                   name: user_id
                   type: bigint
-                  remarks: id of the user groups
+                  remarks: id of the user roles
               - column:
                   name: created_by
                   type: bigint
                   defaultValue: -1
-                  remarks: who created user groups record
+                  remarks: who created user roles record
               - column:
                   name: last_modified_by
                   type: bigint
                   defaultValue: -1
-                  remarks: user groups who modified the record lastly
+                  remarks: user roles who modified the record lastly
               - column:
                   name: created_time
                   type: timestamp
@@ -39,24 +39,24 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     updatable: false
-                  remarks: created date and time of the user groups
+                  remarks: created date and time of the user roles
               - column:
                   name: updated_time
                   type: timestamp
                   defaultValue: now()
-                  remarks: updated date and time of the user groups
-            remarks: Table for storing user groups
+                  remarks: updated date and time of the user roles
+            remarks: Table for storing user roles
         - addForeignKeyConstraint:
-            baseTableName: user_groups
-            baseColumnNames: group_id
-            constraintName: users_group_group_fk
-            referencedTableName: groups
+            baseTableName: user_roles
+            baseColumnNames: role_id
+            constraintName: users_roles_role_fk
+            referencedTableName: roles
             referencedColumnNames: id
-            deferrable:  true
+            deferrable: true
         - addForeignKeyConstraint:
-            baseTableName: user_groups
+            baseTableName: user_roles
             baseColumnNames: user_id
-            constraintName: users_group_user_fk
+            constraintName: users_roles_user_fk
             referencedTableName: users
             referencedColumnNames: id
-            deferrable:  true
+            deferrable: true
