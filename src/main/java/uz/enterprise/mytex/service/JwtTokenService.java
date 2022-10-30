@@ -15,18 +15,18 @@ import uz.enterprise.mytex.util.JwtUtils;
 @PropertySource("classpath:application-dev.properties")
 public class JwtTokenService {
     @Value("${jwt.access.token.secret}")
-    private String secret="U0RGVyQ0MzUzZnNkRyUkXiQlXjxERkhHPE9ZVUslJF4+SkhGR0pUUllVJV4=";
+    private String secretToken = "U0RGVyQ0MzUzZnNkRyUkXiQlXjxERkhHPE9ZVUslJF4+SkhGR0pUUllVJV4=";
     private final JwtUtils jwtUtils;
 
     public String generateToken(CustomUserDetails userDetails) {
-        return jwtUtils.jwt(userDetails.getUsername(), secret);
+        return jwtUtils.jwt(userDetails.getUsername(), secretToken);
     }
 
     public Boolean isValid(String token) {
-        return jwtUtils.isTokenValid(token, secret);
+        return jwtUtils.isTokenValid(token, secretToken);
     }
 
     public String subject(String token) {
-        return jwtUtils.getSubject(token, secret);
+        return jwtUtils.getSubject(token, secretToken);
     }
 }

@@ -1,6 +1,5 @@
 package uz.enterprise.mytex.dto;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -26,7 +25,7 @@ public class AuthRegisterDTO {
     private String lastName;
 
     @NotBlank(message = "Phone number cannot be empty")
-    @Pattern(regexp = "^998([378]{2}|(9[013-57-9]))\\d{7}$")
+    @Pattern(regexp = "^998([378]{2}|(9[013-57-9]))\\d{7}$",message = "Invalid phone number")
     private String phoneNumber;
 
     @NotBlank(message = "Username cannot be empty")

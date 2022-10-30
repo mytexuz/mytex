@@ -3,8 +3,10 @@ package uz.enterprise.mytex.handler;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import uz.enterprise.mytex.exceptions.BadRequestException;
 import uz.enterprise.mytex.exceptions.UserNotFoundException;
 import uz.enterprise.mytex.response.ApiErrorResponse;
 import uz.enterprise.mytex.response.ApiResponse;
@@ -22,5 +24,23 @@ public class GlobalExceptionHandler {
                 .developerMessage(e.getLocalizedMessage())
                 .requestPath(request.getRequestURL().toString())
                 .build(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ApiResponse<ApiErrorResponse> handle400(BadRequestException e, HttpServletRequest request) {
+        return new ApiResponse<>(ApiErrorResponse.builder()
+                .friendlyMessage(e.getMessage())
+                .developerMessage(e.getLocalizedMessage())
+                .requestPath(request.getRequestURL().toString())
+                .build(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ApiResponse<ApiErrorResponse> handle403(AccessDeniedException e, HttpServletRequest request) {
+        return new ApiResponse<>(ApiErrorResponse.builder()
+                .friendlyMessage(e.getMessage())
+                .developerMessage(e.getLocalizedMessage())
+                .requestPath(request.getRequestURL().toString())
+                .build(), HttpStatus.FORBIDDEN);
     }
 }

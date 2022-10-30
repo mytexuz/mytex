@@ -1,6 +1,7 @@
 package uz.enterprise.mytex.service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -9,9 +10,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import uz.enterprise.mytex.entity.RolePermission;
+import uz.enterprise.mytex.entity.Permission;
+import uz.enterprise.mytex.entity.Role;
 import uz.enterprise.mytex.entity.User;
 import uz.enterprise.mytex.exceptions.UserNotFoundException;
+import uz.enterprise.mytex.repository.PermissionRepository;
+import uz.enterprise.mytex.repository.RoleRepository;
 import uz.enterprise.mytex.repository.UserRepository;
 import uz.enterprise.mytex.security.CustomUserDetails;
 
@@ -21,9 +25,13 @@ import uz.enterprise.mytex.security.CustomUserDetails;
 @Service
 public class CustomUserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PermissionRepository permissionRepository;
 
-    public CustomUserDetailService(UserRepository userRepository) {
+    public CustomUserDetailService(UserRepository userRepository, RoleRepository roleRepository, PermissionRepository permissionRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.permissionRepository = permissionRepository;
     }
 
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -31,9 +39,11 @@ public class CustomUserDetailService implements UserDetailsService {
                 orElseThrow(() -> new UserNotFoundException("User not found by username %s".formatted(username)));
         Set<GrantedAuthority> authorities = new HashSet<>();
         if (Objects.nonNull(user.getUserRole())) {
-            authorities.add(new SimpleGrantedAuthority(user.getUserRole().getRole().getAuthority()));
-            for (RolePermission rolePermission : user.getUserRole().getRole().getRolePermissions()) {
-                authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getAuthority()));
+            Role role = roleRepository.findByUserId(user.getId()).orElse(new Role());
+            authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
+            List<Permission> permissionList = permissionRepository.findAllByRoleId(role.getId());
+            for (Permission permission : permissionList) {
+                authorities.add(new SimpleGrantedAuthority(permission.getAuthority()));
             }
         }
         return CustomUserDetails.builder()

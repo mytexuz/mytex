@@ -38,12 +38,6 @@ public class Role extends Auditable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    private Collection<UserRole> userRoles;
-
-    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    private Collection<RolePermission> rolePermissions;
-
     public String getAuthority() {
         return "ROLE_" + this.name;
     }
