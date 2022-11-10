@@ -26,12 +26,12 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.tests>src/test/groovy</sonar.tests>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml
-        </sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <sonar.exclusions>
             **/uz/enterprise/mytex/MytexApplication.java,
             **/uz/enterprise/mytex/config/**/*,
             **/uz/enterprise/mytex/constant/**/*,
+            **/uz/enterprise/mytex/enums/**/*,
             **/uz/enterprise/mytex/entity/**/*,
             **/uz/enterprise/mytex/repository/**/*,
             **/uz/enterprise/mytex/exception/**/*,
@@ -174,6 +174,7 @@
     </dependencies>
 
     <build>
+        <finalName>my-text</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
