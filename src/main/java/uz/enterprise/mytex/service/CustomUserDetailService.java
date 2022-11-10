@@ -6,54 +6,52 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import uz.enterprise.mytex.entity.Permission;
-import uz.enterprise.mytex.entity.Role;
 import uz.enterprise.mytex.entity.User;
-import uz.enterprise.mytex.exceptions.UserNotFoundException;
-import uz.enterprise.mytex.repository.PermissionRepository;
-import uz.enterprise.mytex.repository.RoleRepository;
+import uz.enterprise.mytex.helper.ResponseHelper;
 import uz.enterprise.mytex.repository.UserRepository;
 import uz.enterprise.mytex.security.CustomUserDetails;
+import uz.enterprise.mytex.security.PermissionDto;
 
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 1:47 PM 10/26/22 on Wednesday in October
- */
 @Service
 public class CustomUserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final PermissionRepository permissionRepository;
+    private final PermissionService permissionService;
+    private final ResponseHelper responseHelper;
 
-    public CustomUserDetailService(UserRepository userRepository, RoleRepository roleRepository, PermissionRepository permissionRepository) {
+    public CustomUserDetailService(UserRepository userRepository,
+                                   PermissionService permissionService,
+                                   ResponseHelper responseHelper) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.permissionRepository = permissionRepository;
+        this.permissionService = permissionService;
+        this.responseHelper = responseHelper;
     }
 
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).
-                orElseThrow(() -> new UserNotFoundException("User not found by username %s".formatted(username)));
+        User user = userRepository.findByUsernameOrEmail(username).
+                orElseThrow(() -> new UsernameNotFoundException(Objects.requireNonNull(
+                        responseHelper.userDoesNotExist().getBody()).getMessage()));
         Set<GrantedAuthority> authorities = new HashSet<>();
         if (Objects.nonNull(user.getUserRole())) {
-            Role role = roleRepository.findByUserId(user.getId()).orElse(new Role());
-            authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-            List<Permission> permissionList = permissionRepository.findAllByRoleId(role.getId());
+            List<Permission> permissionList = permissionService.getPermissionsByUserId(user.getId());
             for (Permission permission : permissionList) {
-                authorities.add(new SimpleGrantedAuthority(permission.getAuthority()));
+                authorities.add(new PermissionDto(permission.getName(), permission.getPath()));
             }
         }
         return CustomUserDetails.builder()
+                .id(user.getId())
                 .username(user.getUsername())
+                .fullName(user.getFirstName() + " " + user.getLastName())
                 .password(user.getPassword())
                 .authorities(authorities)
-                .isEnabled(user.getStatusBoolean())
-                .isAccountNonLocked(user.getStatusBoolean())
-                .isCredentialsNonExpired(user.getStatusBoolean())
-                .isAccountNonExpired(user.getStatusBoolean())
+                .isEnabled(true)
+                .status(user.getStatus())
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .isAccountNonExpired(true)
                 .build();
     }
 }

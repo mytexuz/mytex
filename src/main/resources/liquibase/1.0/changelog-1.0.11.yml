@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Properties table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: properties
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the properties record
+              - column:
+                  name: key
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+                  remarks: key of property
+              - column:
+                  name: value
+                  constraints:
+                    nullable: false
+                  type: text
+                  remarks: value of the property
+              - column:
+                  name: created_by
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: the user who created the record
+              - column:
+                  name: updated_by
+                  type: bigint
+                  remarks: the user who updated the record lastly
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created time of the record
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated time of the record
+            remarks: Table for storing properties

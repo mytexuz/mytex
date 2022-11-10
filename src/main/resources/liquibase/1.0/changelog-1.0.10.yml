@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Blocked Accounts table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: blocked_accounts
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the blocked accounts record
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: id of the user which is blocked
+              - column:
+                  name: blocked_by
+                  type: bigint
+                  remarks: id of the user who is blocked
+              - column:
+                  name: status
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+                  defaultValue: 'ACTIVE'
+                  remarks: status of the blocked account record
+              - column:
+                  name: period
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+                  remarks: date which blocked account block until
+              - column:
+                  name: reason
+                  type: text
+                  remarks: reason that why device blocked
+              - column:
+                  name: created_by
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: the user who created the record
+              - column:
+                  name: updated_by
+                  type: bigint
+                  remarks: the user who updated the record lastly
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created time of the record
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated time of the record
+            remarks: Table for storing blocked accounts
+        - addForeignKeyConstraint:
+            baseTableName: blocked_accounts
+            baseColumnNames: user_id
+            constraintName: blocked_accounts_role_fk
+            referencedTableName: users
+            referencedColumnNames: id
+            deferrable: true
+        - addForeignKeyConstraint:
+            baseTableName: blocked_accounts
+            baseColumnNames: blocked_by
+            constraintName: blocked_accounts_permission_fk
+            referencedTableName: users
+            referencedColumnNames: id
+            deferrable: true

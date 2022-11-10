@@ -1,6 +1,9 @@
 package uz.enterprise.mytex.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,18 +17,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import static uz.enterprise.mytex.constant.TableNames.TB_USER_ROLE;
 import uz.enterprise.mytex.entity.audit.Auditable;
+import uz.enterprise.mytex.enums.Status;
 
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 4:08 PM 10/24/22 on Monday in October
- */
 @Entity
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_roles")
+@Table(name = TB_USER_ROLE)
 public class UserRole extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,4 +40,8 @@ public class UserRole extends Auditable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }

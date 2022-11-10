@@ -5,9 +5,6 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 1:52 PM 10/26/22 on Wednesday in October
- */
 @Getter
 @Setter
 @Component

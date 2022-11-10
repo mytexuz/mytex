@@ -30,18 +30,17 @@
         </sonar.coverage.jacoco.xmlReportPaths>
         <sonar.exclusions>
             **/uz/enterprise/mytex/MytexApplication.java,
-            **/uz/enterprise/mytex/configs/**/*,
+            **/uz/enterprise/mytex/config/**/*,
             **/uz/enterprise/mytex/constant/**/*,
             **/uz/enterprise/mytex/entity/**/*,
             **/uz/enterprise/mytex/repository/**/*,
-            **/uz/enterprise/mytex/exceptions/**/*,
+            **/uz/enterprise/mytex/exception/**/*,
             **/uz/enterprise/mytex/common/**/*,
             **/uz/enterprise/mytex/dto/**/*,
             **/uz/enterprise/mytex/enums/**/*,
-            **/uz/enterprise/mytex/filters/**/*,
-            **/uz/enterprise/mytex/handler/**/*,
             **/uz/enterprise/mytex/property/**/*,
             **/uz/enterprise/mytex/response/**/*,
+            **/uz/enterprise/mytex/helper/**/*,
             **/uz/enterprise/mytex/security/**/*
         </sonar.exclusions>
     </properties>
@@ -155,6 +154,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.passay</groupId>
+            <artifactId>passay</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
             <version>2.2</version>
@@ -206,17 +211,16 @@
                     <excludes>
                         <exclude>**/uz/enterprise/mytex/MytexApplication.class</exclude>
                         <exclude>**/uz/enterprise/mytex/audit/**/*</exclude>
-                        <exclude>**/uz/enterprise/mytex/configs/**/*</exclude>
+                        <exclude>**/uz/enterprise/mytex/config/**/*</exclude>
                         <exclude>**/uz/enterprise/mytex/constant/**/*</exclude>
                         <exclude>**/uz/enterprise/mytex/entity/**/*</exclude>
                         <exclude>**/uz/enterprise/mytex/repository/**/*</exclude>
-                        <exclude>**/uz/enterprise/mytex/exceptions/**/*</exclude>
+                        <exclude>**/uz/enterprise/mytex/exception/**/*</exclude>
                         <exclude>**/uz/enterprise/mytex/dto/**/*</exclude>
                         <exclude>**/uz/enterprise/mytex/enums/**/*</exclude>
-                        <exclude>**/uz/enterprise/mytex/filters/**/*</exclude>
-                        <exclude>**/uz/enterprise/mytex/handler/**/*</exclude>
                         <exclude>**/uz/enterprise/mytex/property/**/*</exclude>
                         <exclude>**/uz/enterprise/mytex/response/**/*</exclude>
+                        <exclude>**/uz/enterprise/mytex/helper/**/*</exclude>
                         <exclude>**/uz/enterprise/mytex/security/**/*</exclude>
                     </excludes>
                 </configuration>

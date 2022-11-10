@@ -1,0 +1,65 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Partners table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: partners
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: identifier of the partner
+              - column:
+                  name: name
+                  type: varchar(64)
+                  remarks: partner’s name
+              - column:
+                  name: address
+                  type: varchar(128)
+                  remarks: partner’s address
+              - column:
+                  name: type_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: type of partner referenced to partner_types table
+              - column:
+                  name: phone_number
+                  type: varchar(16)
+                  remarks: phone number of the partner
+              - column:
+                  name: email
+                  type: varchar(64)
+                  remarks: email of the partner
+              - column:
+                  name: status
+                  type: varchar(16)
+                  defaultValue: 'PENDING'
+                  remarks: partner’s status
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created time of the record
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated time of the record
+            remarks: Table for storing partners
+        - addForeignKeyConstraint:
+            baseTableName: partners
+            baseColumnNames: type_id
+            constraintName: partners_partner_type_fk
+            referencedTableName: partner_types
+            referencedColumnNames: id
+            deferrable: true
+

@@ -1,4 +1,4 @@
-package uz.enterprise.mytex.configs;
+package uz.enterprise.mytex.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -13,9 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uz.enterprise.mytex.property.OpenApiProperties;
 
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 1:40 PM 10/26/22 on Wednesday in October
- */
 @Configuration
 @ConditionalOnProperty(name = "springdoc.swagger-ui.enabled", havingValue = "true", matchIfMissing = true)
 @SecurityScheme(

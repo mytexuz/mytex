@@ -14,18 +14,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import static uz.enterprise.mytex.constant.TableNames.TB_SESSION;
+import uz.enterprise.mytex.entity.audit.TimedAuditable;
 
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 4:37 PM 10/22/22 on Saturday in October
- */
 @Entity
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "sessions")
-public class Session {
+@Table(name = TB_SESSION)
+public class Session extends TimedAuditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

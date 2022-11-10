@@ -8,18 +8,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 7:16 PM 10/28/22 on Friday in October
- */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AuthLoginDTO {
-    @NotBlank(message = "Username cannot be empty")
-    private String username;
+public class LoginDto {
+    @NotBlank(message = "auth.usernameoremail.not.valid")
+    private String usernameOrEmail;
 
-    @NotBlank(message = "Password cannot be empty")
+    @NotBlank(message = "auth.password.not.valid")
     private String password;
 }

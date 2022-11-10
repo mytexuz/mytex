@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Partner Types table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: partner_types
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: identifier of the partner types
+              - column:
+                  name: name
+                  type: varchar(32)
+                  remarks: name of the partner type
+              - column:
+                  name: description
+                  type: text
+                  remarks: description about partner type
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created time of the record
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated time of the record
+            remarks: Table for storing partner types

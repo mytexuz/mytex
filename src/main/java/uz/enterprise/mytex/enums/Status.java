@@ -1,8 +1,20 @@
 package uz.enterprise.mytex.enums;
 
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 4:35 PM 10/25/22 on Tuesday in October
- */
+
+import java.util.Objects;
+
 public enum Status {
-    ACTIVE, BLOCK
+    ACTIVE, DISABLED, PENDING;
+
+    public static boolean isActive(Status status){
+        return Objects.equals(status, ACTIVE);
+    }
+
+    public static boolean isPending(Status status){
+        return Objects.equals(status, PENDING);
+    }
+
+    public static boolean isDisabled(Status status){
+        return Objects.equals(status, DISABLED);
+    }
 }

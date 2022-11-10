@@ -14,19 +14,26 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 3:18 PM 10/26/22 on Wednesday in October
- */
 @Component
-public class JwtUtils {
+public class JwtUtil {
+    /**
+     * @param token  Json Web Token which is we created
+     * @param secret JWT created using <em>secret</em>
+     * @return a String which is a JWT subject
+     */
     public String getSubject(String token, String secret) {
-        return getClaim(token, Claims::getSubject, secret);
-    }
-    private <T> T getClaim(String token, Function<Claims, T> function, String secret) {
-        Jws<Claims> claimsJws = jwtClaims(token, secret);
+        Function<Claims, String> function = Claims::getSubject;
+        Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
         Claims claims = claimsJws.getBody();
         return function.apply(claims);
     }
+
+    /**
+     * @param subject identifies the principal that is the subject of the JWT.
+     * @param secret  JWT is created with a secret key and that secret key is private to you which means you will never reveal that to the public or inject inside the JWT token.
+     *                When you receive a JWT from the client, you can verify that JWT with this that secret key stored on the server.
+     * @return a String which is a specific Json Web Token
+     */
     public String jwt(@NonNull final String subject,
                       @NonNull final String secret) {
         Instant now = Instant.now(Clock.systemDefaultZone());
@@ -37,14 +44,12 @@ public class JwtUtils {
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
-    public Jws<Claims> jwtClaims(@NonNull final String token, @NonNull final String secret) {
-        try {
-            return Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
 
+    /**
+     * @param token  Json Web Token
+     * @param secret JWT created using secret
+     * @return <code>true</code> if JWT subject is not null, otherwise <code>false</code>
+     */
     public boolean isTokenValid(String token, String secret) {
         String subject = getSubject(token, secret);
         return Objects.nonNull(subject);

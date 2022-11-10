@@ -3,6 +3,7 @@ package uz.enterprise.mytex.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -17,19 +18,19 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import static uz.enterprise.mytex.constant.TableNames.TB_USER;
 import uz.enterprise.mytex.entity.audit.Auditable;
 import uz.enterprise.mytex.enums.Status;
 
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 4:00 PM 10/22/22 on Saturday in October
- */
 @Entity
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
+@Table(name = TB_USER)
+@EntityListeners(AuditingEntityListener.class)
 public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +54,8 @@ public class User extends Auditable {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @Column(name = "email", unique = true)
+    private String email;
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -83,9 +86,5 @@ public class User extends Auditable {
             userRole.setUser(this);
         }
         this.userRole = userRole;
-    }
-
-    public boolean getStatusBoolean() {
-        return this.status.equals(Status.ACTIVE);
     }
 }
