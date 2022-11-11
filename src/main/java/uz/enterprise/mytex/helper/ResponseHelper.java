@@ -66,15 +66,15 @@ public class ResponseHelper {
         return prepareResponse(localizationService.getMessage(MessageKey.INCORRECT_PASSWORD), HttpStatus.UNAUTHORIZED);
     }
 
-    public ResponseEntity<Object> successWithObject(Map<Object, Object> object) {
+    public ResponseEntity<Object> success(Map<Object, Object> object) {
         return prepareResponse(object, localizationService.getMessage(MessageKey.SUCCESS), HttpStatus.OK);
     }
 
-    public ResponseEntity<Object> successWithObject(Object object) {
+    public ResponseEntity<Object> success(Object object) {
         return prepareResponse(object, localizationService.getMessage(MessageKey.SUCCESS));
     }
 
-    public ResponseEntity<ResponseData<String>> successWithoutObject() {
+    public ResponseEntity<ResponseData<String>> success() {
         return prepareResponse(localizationService.getMessage(MessageKey.SUCCESS), HttpStatus.OK);
     }
 

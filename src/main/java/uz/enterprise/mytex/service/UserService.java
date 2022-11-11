@@ -3,7 +3,6 @@ package uz.enterprise.mytex.service;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,7 +47,7 @@ public class UserService {
                 .authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsernameOrEmail(), loginDto.getPassword()));
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         String token = jwtTokenService.generateToken(userDetails.getUsername());
-        return responseHelper.successWithObject(new TokenResponseDto(token, userDetails.getFullName()));
+        return responseHelper.success(new TokenResponseDto(token, userDetails.getFullName()));
     }
 
     public ResponseEntity<?> register(RegisterDto registerDto) {
@@ -70,7 +69,7 @@ public class UserService {
         User save = userRepository.save(user);
         UserDto userDto = new UserDto(save);
         userDto.setPassword(rawPassword);
-        return responseHelper.successWithObject(userDto);
+        return responseHelper.success(userDto);
     }
 
     public ResponseEntity<?> update(UserUpdateDto userDto) {
@@ -90,7 +89,7 @@ public class UserService {
         User save = userRepository.save(user);
         UserDto dto = new UserDto(save);
         dto.setPassword(pass);
-        return responseHelper.successWithObject(dto);
+        return responseHelper.success(dto);
     }
 
     public ResponseEntity<?> changeStatus(ChangeStatusDto statusDto) {
@@ -99,7 +98,7 @@ public class UserService {
         });
         user.setStatus(statusDto.getStatus());
         userRepository.save(user);
-        return responseHelper.successWithObject(Map.of("userId", user.getId(), "status", statusDto.getStatus()));
+        return responseHelper.success(Map.of("userId", user.getId(), "status", statusDto.getStatus()));
     }
 
     public ResponseEntity<?> getUsers() {
@@ -110,6 +109,6 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> {
             throw new CustomException(responseHelper.userDoesNotExist());
         });
-        return responseHelper.successWithObject(new UserDto(user));
+        return responseHelper.success(new UserDto(user));
     }
 }

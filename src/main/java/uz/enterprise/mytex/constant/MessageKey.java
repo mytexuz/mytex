@@ -9,7 +9,7 @@ public interface MessageKey {
     String DATA_NOT_FOUND = "data.not.found";
     String INTERNAL_SERVER_ERROR = "internal.server.error";
     String INVALID_DATA = "invalid.data";
-    String SUCCESS = "successWithObject";
+    String SUCCESS = "success";
     String ACCOUNT_PENDING = "auth.account.pending";
     String ACCOUNT_BLOCKED = "auth.account.blocked";
     String FORBIDDEN = "forbidden";

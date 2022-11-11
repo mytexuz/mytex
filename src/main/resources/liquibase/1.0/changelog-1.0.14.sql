@@ -31,9 +31,9 @@ values (22, 'invalid.data', 'EN', 'Invalid data'),
        (23, 'invalid.data', 'UZ', 'Ma’lumotlar noto’g’ri kiritilgan'),
        (24, 'invalid.data', 'RU', 'Неправильные данные');
 insert into public.localizations (id, key, lang, message)
-values (25, 'successWithObject', 'EN', 'Successfully'),
-       (26, 'successWithObject', 'UZ', 'Muvafaqqiyatli'),
-       (27, 'successWithObject', 'RU', 'Успешно');
+values (25, 'success', 'EN', 'Successfully'),
+       (26, 'success', 'UZ', 'Muvafaqqiyatli'),
+       (27, 'success', 'RU', 'Успешно');
 insert into public.localizations (id, key, lang, message)
 values (28, 'user.firstname.not.blank', 'EN', 'First name must not be empty'),
        (29, 'user.firstname.not.blank', 'UZ', 'Foydalanuvchi ismini kiriting'),

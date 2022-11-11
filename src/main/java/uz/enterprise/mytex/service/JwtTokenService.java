@@ -1,5 +1,6 @@
 package uz.enterprise.mytex.service;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.enterprise.mytex.util.JwtUtil;
@@ -10,7 +11,7 @@ public class JwtTokenService {
     private final JwtUtil jwtUtil;
     private final PropertyService propertyService;
 
-    public String generateToken(String subject) {
+    public String generateToken(@NonNull String subject) {
         return jwtUtil.jwt(subject, getTokenSecret());
     }
 

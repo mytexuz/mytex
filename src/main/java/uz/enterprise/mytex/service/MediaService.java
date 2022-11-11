@@ -38,7 +38,7 @@ public class MediaService {
                 String generatedName = UUID.randomUUID() + "." + filenameExtension;
                 Path uploadPath = rootPath.resolve(generatedName);
                 Files.copy(multipartFile.getInputStream(), uploadPath, StandardCopyOption.REPLACE_EXISTING);
-                return responseHelper.successWithObject(Map.of("filePath", uploadPath.toString()));
+                return responseHelper.success(Map.of("filePath", uploadPath.toString()));
             }
             throw new CustomException(responseHelper.invalidData());
         } catch (SizeLimitExceededException e) {
