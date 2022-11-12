@@ -13,6 +13,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
+import uz.enterprise.mytex.common.Generated;
 
 @Component
 public class JwtUtil {
@@ -34,8 +35,7 @@ public class JwtUtil {
      *                When you receive a JWT from the client, you can verify that JWT with this that secret key stored on the server.
      * @return a String which is a specific Json Web Token
      */
-    public String jwt(@NonNull final String subject,
-                      @NonNull final String secret) {
+    public String jwt(@NonNull final String subject, @NonNull final String secret) {
         Instant now = Instant.now(Clock.systemDefaultZone());
         return Jwts.builder()
                 .setSubject(subject)

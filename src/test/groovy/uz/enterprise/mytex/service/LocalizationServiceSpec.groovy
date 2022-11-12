@@ -22,6 +22,7 @@ class LocalizationServiceSpec extends BaseSpecification {
 
         when:
         def actual = localizationService.getMessage(key)
+
         then:
         1 * localizationRepository.findByKeyAndLang(key, lang) >> Optional.of(localization)
         assert actual == localization.getMessage()

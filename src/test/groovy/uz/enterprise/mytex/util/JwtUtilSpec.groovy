@@ -18,15 +18,23 @@ class JwtUtilSpec extends BaseSpecification {
     def "JsonWebToken generate -> success"() {
         when:
         def token = jwtUtil.jwt(subject, secret)
+
         then:
         assert !token.isEmpty()
         assert !token.isBlank()
         assert token instanceof String
     }
 
-    def "JsonWebToken generate -> failed"() {
+    def "JsonWebToken generate #subject -> failed"() {
         when:
-        jwtUtil.jwt(null, null)
+        jwtUtil.jwt(null, "smth")
+        then:
+        thrown(NullPointerException.class)
+    }
+
+    def "JsonWebToken generate #secret -> failed"() {
+        when:
+        jwtUtil.jwt("subject", null)
         then:
         thrown(NullPointerException.class)
     }
@@ -35,6 +43,7 @@ class JwtUtilSpec extends BaseSpecification {
         when:
         def token = jwtUtil.jwt(subject, secret)
         def actualSubject = jwtUtil.getSubject(token, secret)
+
         then:
         assert !actualSubject.isBlank()
         assert !actualSubject.isEmpty()
@@ -46,6 +55,7 @@ class JwtUtilSpec extends BaseSpecification {
         when:
         def token = jwtUtil.jwt(subject, secret)
         def subject = jwtUtil.getSubject(token, secret)
+
         then:
         assert subject != "anotherSubject"
     }
@@ -54,6 +64,7 @@ class JwtUtilSpec extends BaseSpecification {
         when:
         def token = jwtUtil.jwt(subject, secret)
         def isValid = jwtUtil.isTokenValid(token, secret)
+
         then:
         assert isValid
         assert isValid instanceof Boolean
@@ -63,6 +74,7 @@ class JwtUtilSpec extends BaseSpecification {
         when:
         def token = jwtUtil.jwt(subject, secret)
         jwtUtil.isTokenValid(token, "ASOIJAOISJOIAJOIA23HHDISSI")
+
         then:
         thrown(SignatureException.class)
     }

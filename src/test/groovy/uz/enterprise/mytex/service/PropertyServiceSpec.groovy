@@ -15,11 +15,15 @@ class PropertyServiceSpec extends BaseSpecification {
     def "get value of property by key -> success"(Long id, String key, String value) {
         given:
         def property = new Property(id, key, value)
+
         when:
         def actual = propertyService.getValue(key)
+
         then:
         1 * propertyRepository.findByKey(key) >> Optional.of(property)
+
         assert actual == value
+
         where:
         id | key             | value
         1  | "TB_USER"       | "users"

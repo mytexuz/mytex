@@ -22,14 +22,18 @@ class JwtTokenServiceSpec extends BaseSpecification {
         def property = new Property(id, key, value)
         def subject = "awesome"
         def token = "AJSNKANSKJANKSJNAKJNSAK"
+
         when:
         def actualToken = tokenService.generateToken(subject)
+
         then:
         1 * propertyRepository.findByKey(key) >> Optional.of(property)
         1 * jwtUtil.jwt(subject, value) >> token
+
         assert !actualToken.isEmpty()
         assert actualToken instanceof String
         assert actualToken == token
+
         where:
         id | key           | value
         1  | "secretToken" | "U0RGVyQ0MzUzZnNkRyUkXiQlXjxERkhHPE9ZVUslJF4"
@@ -38,6 +42,7 @@ class JwtTokenServiceSpec extends BaseSpecification {
     def "JsonWebToken generate -> failed"() {
         when:
         tokenService.generateToken(null)
+
         then:
         thrown(NullPointerException)
     }
@@ -47,14 +52,18 @@ class JwtTokenServiceSpec extends BaseSpecification {
         def property = new Property(id, key, value)
         def subject = "awesome"
         def token = jwtUtil.jwt(subject, value)
+
         when:
         def actualSubject = tokenService.subject(token)
+
         then:
         1 * propertyRepository.findByKey(key) >> Optional.of(property)
         1 * jwtUtil.getSubject(token, value) >> subject
+
         assert !actualSubject.isEmpty()
         assert actualSubject instanceof String
         assert actualSubject == subject
+
         where:
         id | key           | value
         1  | "secretToken" | "U0RGVyQ0MzUzZnNkRyUkXiQlXjxERkhHPE9ZVUslJF4"
@@ -65,14 +74,18 @@ class JwtTokenServiceSpec extends BaseSpecification {
         def property = new Property(id, key, value)
         def subject = "awesome"
         def token = jwtUtil.jwt(subject, value)
+
         when:
         def actualSubject = tokenService.subject(token)
+
         then:
         1 * propertyRepository.findByKey(key) >> Optional.of(property)
         1 * jwtUtil.getSubject(token, value) >> "subject"
+
         assert !actualSubject.isEmpty()
         assert actualSubject instanceof String
         assert actualSubject != subject
+
         where:
         id | key           | value
         1  | "secretToken" | "U0RGVyQ0MzUzZnNkRyUkXiQlXjxERkhHPE9ZVUslJF4"
@@ -82,13 +95,17 @@ class JwtTokenServiceSpec extends BaseSpecification {
         given:
         def property = new Property(id, key, value)
         def token = "NASNASNAKSNAJSNAKN"
+
         when:
         def isValid = tokenService.isValid(token)
+
         then:
         1 * propertyRepository.findByKey(key) >> Optional.of(property)
         1 * jwtUtil.isTokenValid(token, value) >> true
+
         assert isValid
         assert isValid instanceof Boolean
+
         where:
         id | key           | value
         1  | "secretToken" | "U0RGVyQ0MzUzZnNkRyUkXiQlXjxERkhHPE9ZVUslJF4"
@@ -98,13 +115,17 @@ class JwtTokenServiceSpec extends BaseSpecification {
         given:
         def property = new Property(id, key, value)
         def token = "NASNASNAKSNAJSNAKN"
+
         when:
         def isValid = tokenService.isValid(token)
+
         then:
         1 * propertyRepository.findByKey(key) >> Optional.of(property)
         1 * jwtUtil.isTokenValid(token, value) >> false
+
         assert !isValid
         assert isValid instanceof Boolean
+
         where:
         id | key           | value
         1  | "secretToken" | "U0RGVyQ0MzUzZnNkRyUkXiQlXjxERkhHPE9ZVUslJF4"

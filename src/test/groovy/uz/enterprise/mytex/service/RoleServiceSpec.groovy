@@ -16,10 +16,13 @@ class RoleServiceSpec extends BaseSpecification {
         given:
         def userId = random.nextLong()
         def role = random.nextObject(Role)
+
         when:
         def actual = roleService.getRoleByUser(userId)
+
         then:
         1 * roleRepository.findByUserId(userId) >> Optional.of(role)
+
         actual == role
     }
 }

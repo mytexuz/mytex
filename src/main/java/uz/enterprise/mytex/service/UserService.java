@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import uz.enterprise.mytex.common.Generated;
 import uz.enterprise.mytex.dto.ChangeStatusDto;
 import uz.enterprise.mytex.dto.LoginDto;
 import uz.enterprise.mytex.dto.RegisterDto;
@@ -32,7 +33,7 @@ public class UserService {
     private final ResponseHelper responseHelper;
     private final PasswordGeneratorHelper passwordGeneratorHelper;
 
-
+    @Generated
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtTokenService jwtTokenService, ResponseHelper responseHelper, PasswordGeneratorHelper passwordGeneratorHelper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -84,7 +85,7 @@ public class UserService {
         user.setLastName(userDto.getLastName());
         user.setPhoneNumber(userDto.getPhoneNumber());
         if (!userDto.getPhoto().isBlank()) {
-            user.setPhoto(user.getPhoto());
+            user.setPhoto(userDto.getPhoto());
         }
         User save = userRepository.save(user);
         UserDto dto = new UserDto(save);
@@ -101,6 +102,7 @@ public class UserService {
         return responseHelper.success(Map.of("userId", user.getId(), "status", statusDto.getStatus()));
     }
 
+    @Generated
     public ResponseEntity<?> getUsers() {
         return null;
     }

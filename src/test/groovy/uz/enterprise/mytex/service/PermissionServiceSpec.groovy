@@ -25,11 +25,14 @@ class PermissionServiceSpec extends BaseSpecification {
         def role = random.nextObject(Role)
         def permission = random.nextObject(Permission)
         def permission2 = random.nextObject(Permission)
-        def list = List.of(permission, permission2)
+        def list = [permission, permission2]
+        def userId = 1
+
         when:
-        def actual = permissionService.getPermissionsByUserId(1)
+        def actual = permissionService.getPermissionsByUserId(userId)
+
         then:
-        1 * roleRepository.findByUserId(1) >> Optional.of(role)
+        1 * roleRepository.findByUserId(userId) >> Optional.of(role)
         1 * permissionRepository.findAllByRoleId(role.id) >> List.of(permission, permission2)
         actual == list
     }
