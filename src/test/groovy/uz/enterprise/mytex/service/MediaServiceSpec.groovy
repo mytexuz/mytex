@@ -27,7 +27,7 @@ class MediaServiceSpec extends BaseSpecification {
         def file = random.nextObject(MockMultipartFile)
 
         def property = random.nextObject(Property)
-        property.value = "/home/zuhriddin/Pictures/avatar/"
+        property.value = "."
         property.key = "FILE_UPLOAD_PATH"
 
         def localization = new Localization(1, "success", Lang.UZ, "Successful!")
@@ -49,6 +49,7 @@ class MediaServiceSpec extends BaseSpecification {
 
         actual.statusCode == HttpStatus.OK
         actual.body != null
+
     }
 
     def "Upload file -> failed"() {
@@ -65,4 +66,6 @@ class MediaServiceSpec extends BaseSpecification {
         1 * responseHelper.invalidData() >> invalidData
         thrown(CustomException)
     }
+
 }
+

@@ -27,7 +27,7 @@ values (1, 'TB_USER', 'users', 0, current_timestamp),
        (26, 'ACCOUNT_PENDING', 'auth.account.pending', 0, current_timestamp),
        (27, 'ACCOUNT_BLOCKED', 'auth.account.blocked', 0, current_timestamp),
        (28, 'FORBIDDEN', 'forbidden', 0, current_timestamp),
-       (29, 'FILE_UPLOAD_PATH', '/home/zuhriddin/Pictures/avatar/', 0, current_timestamp);
+       (29, 'FILE_UPLOAD_PATH', './docs/test', 0, current_timestamp);
 
 
 
