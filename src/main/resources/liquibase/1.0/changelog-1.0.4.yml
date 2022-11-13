@@ -31,6 +31,19 @@ databaseChangeLog:
                   name: status
                   type: varchar(16)
                   remarks: session status
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created time of the record
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated time of the record
             remarks: Table for storing session
         - addForeignKeyConstraint:
             baseTableName: sessions

@@ -16,28 +16,18 @@ databaseChangeLog:
                   remarks: unique id of the device record
               - column:
                   name: name
-                  type: varchar(32)
+                  type: varchar(128)
                   remarks: title of the device
               - column:
                   name: mac_address
-                  type: varchar(16)
+                  type: varchar(64)
                   remarks: mac address of the device
               - column:
                   name: device_id
-                  type: varchar(64)
+                  type: varchar(128)
                   remarks: unique id of the device
               - column:
-                  name: created_by
-                  type: bigint
-                  defaultValue: -1
-                  remarks: who created device record
-              - column:
-                  name: last_modified_by
-                  type: bigint
-                  defaultValue: -1
-                  remarks: device who modified the record lastly
-              - column:
-                  name: created_time
+                  name: created_at
                   type: timestamp
                   defaultValue: now()
                   constraints:
@@ -45,7 +35,7 @@ databaseChangeLog:
                     updatable: false
                   remarks: created date and time of the device
               - column:
-                  name: updated_time
+                  name: updated_at
                   type: timestamp
                   defaultValue: now()
                   remarks: updated date and time of the device

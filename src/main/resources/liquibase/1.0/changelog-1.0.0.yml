@@ -13,7 +13,7 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  remarks: unique id of the user record
+                  remarks: identifier of the user
               - column:
                   name: first_name
                   type: varchar(32)
@@ -29,49 +29,56 @@ databaseChangeLog:
               - column:
                   name: phone_number
                   type: varchar(32)
-                  remarks: phone number of the user
+                  remarks: user’s phone number
               - column:
                   name: photo
                   type: varchar(128)
-                  remarks: image of the user
+                  remarks: url for user’s avatar
               - column:
                   name: password
                   type: varchar(128)
                   constraints:
                     nullable: false
-                  remarks: secret key of the user
+                  remarks: password hash in bcrypt
               - column:
                   name: username
                   type: varchar(32)
                   constraints:
                     nullable: false
                     unique: true
-                  remarks: unique username of the user
+                  remarks: unique username
+              - column:
+                  name: email
+                  type: varchar(32)
+                  constraints:
+                    unique: true
+                  remarks: unique email address of the user
               - column:
                   name: status
-                  type: boolean
-                  remarks: status of the user
+                  type: varchar(16)
+                  defaultValue: 'PENDING'
+                  remarks: user’s status
               - column:
                   name: created_by
                   type: bigint
-                  defaultValue: -1
-                  remarks: who created user record
+                  constraints:
+                    nullable: false
+                  remarks: the user who created the record
               - column:
-                  name: last_modified_by
+                  name: updated_by
                   type: bigint
-                  defaultValue: -1
-                  remarks: user who modified the record lastly
+                  remarks: the user who updated the record lastly
               - column:
-                  name: created_time
+                  name: created_at
                   type: timestamp
                   defaultValue: now()
                   constraints:
                     nullable: false
                     updatable: false
-                  remarks: created date and time of the user
+                  remarks: created time of the record
               - column:
-                  name: updated_time
+                  name: updated_at
                   type: timestamp
                   defaultValue: now()
-                  remarks: updated date and time of the user
+                  remarks: updated time of the record
             remarks: Table for storing users

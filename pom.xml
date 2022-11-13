@@ -35,7 +35,13 @@
             **/uz/enterprise/mytex/entity/**/*,
             **/uz/enterprise/mytex/repository/**/*,
             **/uz/enterprise/mytex/exception/**/*,
-            **/uz/enterprise/mytex/common/**/*
+            **/uz/enterprise/mytex/common/**/*,
+            **/uz/enterprise/mytex/dto/**/*,
+            **/uz/enterprise/mytex/enums/**/*,
+            **/uz/enterprise/mytex/property/**/*,
+            **/uz/enterprise/mytex/response/**/*,
+            **/uz/enterprise/mytex/helper/**/*,
+            **/uz/enterprise/mytex/security/**/*
         </sonar.exclusions>
     </properties>
 
@@ -43,6 +49,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
         </dependency>
 
         <dependency>
@@ -58,6 +75,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-javadoc</artifactId>
+            <version>1.6.12</version>
         </dependency>
 
         <dependency>
@@ -125,6 +154,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.passay</groupId>
+            <artifactId>passay</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
             <version>2.2</version>
@@ -182,6 +217,12 @@
                         <exclude>**/uz/enterprise/mytex/entity/**/*</exclude>
                         <exclude>**/uz/enterprise/mytex/repository/**/*</exclude>
                         <exclude>**/uz/enterprise/mytex/exception/**/*</exclude>
+                        <exclude>**/uz/enterprise/mytex/dto/**/*</exclude>
+                        <exclude>**/uz/enterprise/mytex/enums/**/*</exclude>
+                        <exclude>**/uz/enterprise/mytex/property/**/*</exclude>
+                        <exclude>**/uz/enterprise/mytex/response/**/*</exclude>
+                        <exclude>**/uz/enterprise/mytex/helper/**/*</exclude>
+                        <exclude>**/uz/enterprise/mytex/security/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

@@ -13,34 +13,29 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
-
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 4:00 PM 10/22/22 on Saturday in October
- */
 @Getter
 @Setter
 @JsonIgnoreProperties(
-        value = {"createdBy", "lastModifiedBy",
-                "createdTime", "updatedTime"},
+        value = {"createdBy", "updatedBy",
+                "createdAt", "updatedAt"},
         allowGetters = true
 )
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class Auditable {
     @CreatedBy
-    @Column(name = "created_by", columnDefinition = "bigint default 1", updatable = false)
+    @Column(name = "created_by")
     protected Long createdBy;
 
     @LastModifiedBy
-    @Column(name = "last_modified_by", columnDefinition = "bigint default 1")
-    protected Long lastModifiedBy;
+    @Column(name = "updated_by")
+    protected Long updatedBy;
 
     @CreationTimestamp
-    @Column(name = "created_time")
-    private LocalDateTime createdTime;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_time")
-    private LocalDateTime updatedTime;
-
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Localizations table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: localizations
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the localizations record
+              - column:
+                  name: key
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+                  remarks: specific key of the localization
+              - column:
+                  name: lang
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+                  remarks: language of the  localization
+              - column:
+                  name: message
+                  type: text
+                  constraints:
+                    nullable: false
+                  remarks: message of localization belongs to key
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created date and time of the localizations
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated date and time of the localizations
+            remarks: Table for storing localizations
+        - addUniqueConstraint:
+            columnNames: key, lang
+            constraintName: key_lang_const
+            deferrable: true
+            disabled: true
+            initiallyDeferred: true
+            schemaName: public
+            tableName: localizations

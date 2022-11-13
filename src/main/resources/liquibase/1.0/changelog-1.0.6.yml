@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: Create Group Permissions table
+      id: Create Role Permissions table
       author: Zuhriddin Shamsiddinov
       changes:
         - createTable:
-            tableName: group_permissions
+            tableName: role_permissions
             columns:
               - column:
                   name: id
@@ -13,50 +13,59 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  remarks: unique id of the group permissions record
+                  remarks: identifier of the role-permission relationship
               - column:
-                  name: group_id
+                  name: role_id
                   type: bigint
-                  remarks: id of the group
+                  constraints:
+                    nullable: false
+                  remarks: referenced column to the user’s table
               - column:
                   name: permission_id
                   type: bigint
-                  remarks: id of the  permissions
+                  constraints:
+                    nullable: false
+                  remarks: referenced column to the permissions table
+              - column:
+                  name: status
+                  type: varchar(16)
+                  remarks: status of the role-permission relationship
+                  defaultValue: 'PENDING'
               - column:
                   name: created_by
                   type: bigint
-                  defaultValue: -1
-                  remarks: who created group permissions record
+                  constraints:
+                    nullable: false
+                  remarks: the user who created the record
               - column:
-                  name: last_modified_by
+                  name: updated_by
                   type: bigint
-                  defaultValue: -1
-                  remarks: group permissions who modified the record lastly
+                  remarks: the user who updated the record lastly
               - column:
-                  name: created_time
+                  name: created_at
                   type: timestamp
                   defaultValue: now()
                   constraints:
                     nullable: false
                     updatable: false
-                  remarks: created date and time of the group permissions
+                  remarks: created time of the record
               - column:
-                  name: updated_time
+                  name: updated_at
                   type: timestamp
                   defaultValue: now()
-                  remarks: updated date and time of the group permissions
-            remarks: Table for storing group permissions
+                  remarks: updated time of the record
+            remarks: Table for storing role permissions
         - addForeignKeyConstraint:
-            baseTableName: group_permissions
-            baseColumnNames: group_id
-            constraintName: group_permissions_group_fk
-            referencedTableName: groups
+            baseTableName: role_permissions
+            baseColumnNames: role_id
+            constraintName: role_permissions_role_fk
+            referencedTableName: roles
             referencedColumnNames: id
-            deferrable:  true
+            deferrable: true
         - addForeignKeyConstraint:
-            baseTableName: group_permissions
+            baseTableName: role_permissions
             baseColumnNames: permission_id
-            constraintName: group_permissions_permission_fk
+            constraintName: role_permissions_permission_fk
             referencedTableName: permissions
             referencedColumnNames: id
-            deferrable:  true
+            deferrable: true

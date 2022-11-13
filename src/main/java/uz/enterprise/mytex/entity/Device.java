@@ -14,19 +14,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import static uz.enterprise.mytex.constant.TableNames.TB_DEVICE;
 import uz.enterprise.mytex.entity.audit.Auditable;
+import uz.enterprise.mytex.entity.audit.TimedAuditable;
 
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 4:31 PM 10/22/22 on Saturday in October
- */
 @Entity
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "devices")
-public class Device extends Auditable {
+@Table(name = TB_DEVICE)
+public class Device extends TimedAuditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

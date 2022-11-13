@@ -1,5 +1,6 @@
 package uz.enterprise.mytex.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,35 +8,41 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import static uz.enterprise.mytex.constant.TableNames.TB_PARTNER;
 import uz.enterprise.mytex.entity.audit.Auditable;
 
-/**
- * @author - 'Zuhriddin Shamsiddionov' at 4:08 PM 10/24/22 on Monday in October
- */
 @Entity
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_groups")
-public class UserGroup extends Auditable {
+@Table(name = TB_PARTNER)
+public class Partner extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    private Group group;
+    @Column(name = "name")
+    private String name;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "address")
+    private String address;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id", nullable = false)
+    private PartnerType partnerType;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "email")
+    private String email;
 }

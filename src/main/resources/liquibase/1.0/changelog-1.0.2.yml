@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: Create Groups table
+      id: Create Roles table
       author: Zuhriddin Shamsiddinov
       changes:
         - createTable:
-            tableName: groups
+            tableName: roles
             columns:
               - column:
                   name: id
@@ -13,38 +13,43 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
                     nullable: false
-                  remarks: unique id of the group record
+                  remarks: identifier of the role
               - column:
                   name: name
                   type: varchar(32)
                   constraints:
                     nullable: false
-                  remarks: title of the group
+                  remarks: name of the role
               - column:
                   name: description
                   type: text
-                  remarks: explanation of the group
+                  remarks: explanation of the role
+              - column:
+                  name: status
+                  type: varchar(16)
+                  remarks: status of the role
+                  defaultValue: 'PENDING'
               - column:
                   name: created_by
                   type: bigint
-                  defaultValue: -1
-                  remarks: who created group record
+                  constraints:
+                    nullable: false
+                  remarks: the user who created the record
               - column:
-                  name: last_modified_by
+                  name: updated_by
                   type: bigint
-                  defaultValue: -1
-                  remarks: group who modified the record lastly
+                  remarks: the user who updated the record lastly
               - column:
-                  name: created_time
+                  name: created_at
                   type: timestamp
                   defaultValue: now()
                   constraints:
                     nullable: false
                     updatable: false
-                  remarks: created date and time of the group
+                  remarks: created time of the record
               - column:
-                  name: updated_time
+                  name: updated_at
                   type: timestamp
                   defaultValue: now()
-                  remarks: updated date and time of the group
-            remarks: Table for storing groups
+                  remarks: updated time of the record
+            remarks: Table for storing roles
