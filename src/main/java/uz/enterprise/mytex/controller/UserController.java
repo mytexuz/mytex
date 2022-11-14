@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import uz.enterprise.mytex.common.Generated;
 import uz.enterprise.mytex.dto.ChangeStatusDto;
 import uz.enterprise.mytex.dto.RegisterDto;
 import uz.enterprise.mytex.dto.UserUpdateDto;
@@ -37,12 +39,13 @@ public class UserController {
         return userService.changeStatus(statusDto);
     }
 
-    @GetMapping(value = "/get/{userId}")
-    public ResponseEntity<?> getUser(@PathVariable(value = "userId") Long id) {
-        return userService.getUser(id);
+    @GetMapping(value = "/get")
+    public ResponseEntity<?> getUser(@RequestParam(value = "id") Long userId) {
+        return userService.getUserById(userId);
     }
 
     @GetMapping(value = "/get-users")
+    @Generated
     public ResponseEntity<?> getUsers() {
         return userService.getUsers();
     }

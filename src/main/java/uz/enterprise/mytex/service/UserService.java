@@ -107,7 +107,7 @@ public class UserService {
         return null;
     }
 
-    public ResponseEntity<?> getUser(Long id) {
+    public ResponseEntity<?> getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> {
             throw new CustomException(responseHelper.userDoesNotExist());
         });
