@@ -52,9 +52,7 @@ There are not any third party integrations yet...
 <details>
 <summary>ENDPOINTS</summary>
 
-### One To One
-
-- Authentication
+### Authentication
 
 **Method:** POST<br>
 **URI:** api/v1/auth/login<br>
@@ -82,7 +80,7 @@ There are not any third party integrations yet...
 
 #
 
-- Registration
+### Registration
 
 **Method:** POST<br>
 **URI:** api/v1/user/registration<br>
@@ -122,7 +120,7 @@ There are not any third party integrations yet...
 
 #
 
-- Update user
+### Update user
 
 **Method:** PUT<br>
 **URI:** api/v1/user/update<br>
@@ -163,7 +161,7 @@ There are not any third party integrations yet...
 
 #
 
-- User change status
+### User change status
 
 **Method:** PUT<br>
 **URI:** api/v1/user/change-status<br>
@@ -191,7 +189,7 @@ There are not any third party integrations yet...
 
 #
 
-- Get user by his/her identifier
+### Get user by his/her identifier
 
 **Method:** GET<br>
 **URI:** /api/v1/user/get?id={usereId}<br>
@@ -222,7 +220,7 @@ There are not any third party integrations yet...
 
 #
 
-- File upload
+### File upload
 
 **Method:** POST<br>
 **URI:** api/v1/media/upload<br>
