@@ -274,7 +274,7 @@ class UserServiceSpec extends BaseSpecification {
         ], HttpStatus.OK)
 
         when:
-        def response = userService.getUser(userId)
+        def response = userService.getUserById(userId)
 
         then:
         1 * userRepository.findById(userId) >> Optional.of(user)
@@ -297,7 +297,7 @@ class UserServiceSpec extends BaseSpecification {
         def userDoesNotExists = new ResponseEntity(responseData, HttpStatus.UNAUTHORIZED)
 
         when:
-        userService.getUser(userId)
+        userService.getUserById(userId)
 
         then:
         1 * userRepository.findById(userId) >> Optional.ofNullable(null)

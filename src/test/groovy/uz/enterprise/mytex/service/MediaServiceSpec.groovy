@@ -17,9 +17,14 @@ class MediaServiceSpec extends BaseSpecification {
     private MediaService mediaService
     private PropertyService propertyService = Mock()
     private ResponseHelper responseHelper = Mock()
+    private String mockFolderPath = "./media"
 
     void setup() {
         mediaService = new MediaService(responseHelper, propertyService)
+        File mockFolder = new File(mockFolderPath)
+        if (!mockFolder.exists()) {
+            mockFolder.mkdir()
+        }
     }
 
     def "Upload file -> success"() {
@@ -27,7 +32,7 @@ class MediaServiceSpec extends BaseSpecification {
         def file = random.nextObject(MockMultipartFile)
 
         def property = random.nextObject(Property)
-        property.value = "."
+        property.value = mockFolderPath
         property.key = "FILE_UPLOAD_PATH"
 
         def localization = new Localization(1, "success", Lang.UZ, "Successful!")
@@ -65,6 +70,13 @@ class MediaServiceSpec extends BaseSpecification {
         then:
         1 * responseHelper.invalidData() >> invalidData
         thrown(CustomException)
+    }
+
+    def cleanup() {
+        File mockFolder = new File(mockFolderPath)
+        if (mockFolder.exists()) {
+            mockFolder.deleteDir()
+        }
     }
 
 }
