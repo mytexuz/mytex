@@ -1,8 +1,8 @@
 package uz.enterprise.mytex.exception;
 
-import liquibase.repackaged.org.apache.commons.collections4.map.HashedMap;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +81,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             document.setChatId(chatId);
             document.setCaption("Error stacktrace");
             var file = new InputFile();
-            file.setMedia(IOUtils.toInputStream(stacktrace, StandardCharsets.UTF_8), "stacktrace");
+            file.setMedia(IOUtils.toInputStream(stacktrace, StandardCharsets.UTF_8), "stacktrace.txt");
             document.setDocument(file);
             monitoringBot.execute(message);
             monitoringBot.execute(document);
