@@ -220,6 +220,76 @@ There are not any third party integrations yet...
 
 #
 
+### Get list of paged users and filter results
+
+**Method:** PUT<br>
+**URI:** /api/v1/user/get-users<br>
+
+**Request body:**<br>
+
+```
+{
+   "filters":[
+      {
+         "key":"lastName",
+         "operator":"LIKE",
+         "field_type":"STRING",
+         "value":"yev"
+      },
+      {
+         "key":"username",
+         "operator":"LIKE",
+         "field_type":"STRING",
+         "value":"admig"
+      }
+   ],
+   "sorts":[
+      {
+         "key":"createdAt",
+         "direction":"DESC"
+      }
+   ],
+   "page":0,
+   "size":10
+}
+```
+
+**Response body:**<br>
+
+```
+{
+   "data":{
+      "content":[
+         {
+            "id":3,
+            "firstName":"Shohjahon",
+            "lastName":"Rahmataliyev",
+            "phoneNumber":"+998998652321",
+            "username":"afafdfdmin",
+            "registeredDate":"15.11.2022 16:50:09"
+         },
+         {
+            "id":4,
+            "firstName":"Nozim",
+            "lastName":"Jurayev",
+            "phoneNumber":"+998998652321",
+            "username":"admigfgfgfn",
+            "registeredDate":"15.11.2022 16:50:09"
+         }
+      ],
+      "pageNumber":0,
+      "pageSize":10,
+      "totalElements":2,
+      "totalPages":1,
+      "last":true
+   },
+   "message":"Muvafaqqiyatli",
+   "timestamp":"15.11.2022 16:50:17"
+}
+```
+
+#
+
 ### File upload
 
 **Method:** POST<br>

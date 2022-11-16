@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/get-users")
-    public ResponseEntity<?> getUsers(@RequestBody SearchRequest search) throws Exception{
+    public ResponseEntity<?> getUsers(@RequestBody SearchRequest search) {
         return userService.getUsers(search);
     }
 

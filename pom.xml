@@ -19,8 +19,8 @@
         <java.version>17</java.version>
         <spock.version>2.3-groovy-4.0</spock.version>
         <random.beans.version>3.9.0</random.beans.version>
-        <jackson-databind.version>2.13.4.2</jackson-databind.version>
-        <jackson-dataformat-yaml.version>2.13.4</jackson-dataformat-yaml.version>
+        <jackson-databind.version>2.14.0</jackson-databind.version>
+        <jackson-dataformat-yaml.version>2.14.0</jackson-dataformat-yaml.version>
         <jacoco.version>0.8.8</jacoco.version>
         <telegram.bot.version>6.3.0</telegram.bot.version>
         <sonar.organization>mytexuz</sonar.organization>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.11</version>
+            <version>1.6.12</version>
         </dependency>
 
         <dependency>
@@ -93,7 +93,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>4.8.0</version>
+            <version>4.17.2</version>
         </dependency>
 
         <dependency>
@@ -106,7 +106,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.3.7</version>
+            <version>42.5.0</version>
             <scope>runtime</scope>
         </dependency>
 
