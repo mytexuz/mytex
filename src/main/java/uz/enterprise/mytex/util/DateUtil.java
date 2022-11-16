@@ -11,4 +11,8 @@ public class DateUtil {
         return now.format(format);
     }
 
+    public static String formatDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        return dateTime.format(format);
+    }
 }

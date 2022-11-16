@@ -1,23 +1,38 @@
 package uz.enterprise.mytex.service
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.crypto.password.PasswordEncoder
+import spock.lang.Specification
 import uz.enterprise.mytex.BaseSpecification
 import uz.enterprise.mytex.dto.*
+import uz.enterprise.mytex.dto.request.FilterRequest
+import uz.enterprise.mytex.dto.request.SearchRequest
+import uz.enterprise.mytex.dto.request.SortRequest
+import uz.enterprise.mytex.dto.response.PagedResponse
 import uz.enterprise.mytex.dto.response.ResponseData
+import uz.enterprise.mytex.dto.response.UserResponse
 import uz.enterprise.mytex.entity.Localization
 import uz.enterprise.mytex.entity.User
 import uz.enterprise.mytex.enums.Lang
+import uz.enterprise.mytex.enums.Operator
+import uz.enterprise.mytex.enums.PropertyType
+import uz.enterprise.mytex.enums.SortDirection
 import uz.enterprise.mytex.enums.Status
 import uz.enterprise.mytex.exception.CustomException
 import uz.enterprise.mytex.helper.PasswordGeneratorHelper
 import uz.enterprise.mytex.helper.ResponseHelper
 import uz.enterprise.mytex.repository.UserRepository
+import uz.enterprise.mytex.repository.specification.SearchSpecification
 import uz.enterprise.mytex.security.CustomUserDetails
+
+import java.time.LocalDateTime
 
 import static uz.enterprise.mytex.util.DateUtil.getTime
 
@@ -39,6 +54,71 @@ class UserServiceSpec extends BaseSpecification {
                 passwordEncoder,
                 authenticationManager,
                 jwtTokenService, responseHelper, passwordGeneratorHelper)
+    }
+
+    def "Get list of users, search and filter result -> success"(){
+        given:
+        def filters = [
+                new FilterRequest(key: "lastName", operator: Operator.LIKE, propertyType: PropertyType.STRING, value: "yev"),
+                new FilterRequest(key: "username", operator: Operator.LIKE, propertyType: PropertyType.STRING, value: "admig")
+        ]
+
+        def sorts = [
+                new SortRequest(key: "createdAt", direction: SortDirection.DESC)
+        ]
+        def page = 0, size = 10
+        def searchRequest = new SearchRequest(filters: filters, sorts: sorts, page: page, size: size)
+
+        def users = [
+                User.builder().id(1).firstName("Admin")
+                        .lastName("Adminov").phoneNumber("+998904562122")
+                .status(Status.ACTIVE).username("admin1")
+                .createdAt(LocalDateTime.now()).build(),
+                User.builder().id(2).firstName("Shohjahon")
+                        .lastName("Rahmataliyev").phoneNumber("+99891457832")
+                        .status(Status.ACTIVE).username("awesome")
+                        .createdAt(LocalDateTime.now().minusDays(3)).build(),
+                User.builder().id(2).firstName("John")
+                        .lastName("Doe").phoneNumber("+998911239874")
+                        .status(Status.ACTIVE).username("dangerous")
+                        .createdAt(LocalDateTime.now().minusDays(7)).build()
+        ]
+
+        def pagedResult = new PageImpl<User>(users)
+
+        def content = pagedResult
+                .getContent()
+                .stream()
+                .map(UserService::mapToUserResponse).toList();
+
+        def pagedResponse = new PagedResponse<>(content, pagedResult.getNumber(),
+                pagedResult.getSize(), pagedResult.getTotalElements(),
+                pagedResult.getTotalPages(), pagedResult.isLast())
+
+        def successResponse = new ResponseEntity([
+                data     : pagedResponse,
+                message  : localization.message,
+                timestamp: getTime()
+        ], HttpStatus.OK)
+
+        when:
+        def actual = userService.getUsers(searchRequest)
+
+        then:
+        1 * userRepository.findAll(_ as SearchSpecification, _ as Pageable) >> pagedResult
+        1 * responseHelper.success(_ as Object) >> successResponse
+        def actualResponseMap = actual.body as Map<String, Object>
+        def actualData = actualResponseMap.get("data") as PagedResponse<UserResponse>
+        def actualBody = actualData.content as List<UserResponse>
+
+        actual.statusCode == HttpStatus.OK
+        actual.body != null
+        actualData.content.size() == content.size()
+        actualData.last == pagedResult.last
+        actualData.pageNumber == page
+        actualData.pageSize == pagedResult.size
+        actualData.totalElements == pagedResult.totalElements
+        actualBody.size() == users.size()
     }
 
     def "User service login -> success"() {

@@ -16,6 +16,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import static uz.enterprise.mytex.constant.TableNames.TB_LOCALIZATION;
+
+import lombok.experimental.SuperBuilder;
 import uz.enterprise.mytex.entity.audit.TimedAuditable;
 import uz.enterprise.mytex.enums.Lang;
 
@@ -24,7 +26,7 @@ import uz.enterprise.mytex.enums.Lang;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder
+@SuperBuilder
 @Table(name = TB_LOCALIZATION, uniqueConstraints = {@UniqueConstraint(columnNames = {"key", "lang"})})
 public class Localization extends TimedAuditable {
     @Id

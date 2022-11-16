@@ -1,8 +1,13 @@
 package uz.enterprise.mytex.service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,12 +21,16 @@ import uz.enterprise.mytex.dto.RegisterDto;
 import uz.enterprise.mytex.dto.TokenResponseDto;
 import uz.enterprise.mytex.dto.UserDto;
 import uz.enterprise.mytex.dto.UserUpdateDto;
+import uz.enterprise.mytex.dto.request.SearchRequest;
+import uz.enterprise.mytex.dto.response.PagedResponse;
+import uz.enterprise.mytex.dto.response.UserResponse;
 import uz.enterprise.mytex.entity.User;
 import uz.enterprise.mytex.enums.Status;
 import uz.enterprise.mytex.exception.CustomException;
 import uz.enterprise.mytex.helper.PasswordGeneratorHelper;
 import uz.enterprise.mytex.helper.ResponseHelper;
 import uz.enterprise.mytex.repository.UserRepository;
+import uz.enterprise.mytex.repository.specification.SearchSpecification;
 import uz.enterprise.mytex.security.CustomUserDetails;
 
 @Service
@@ -102,9 +111,16 @@ public class UserService {
         return responseHelper.success(Map.of("userId", user.getId(), "status", statusDto.getStatus()));
     }
 
-    @Generated
-    public ResponseEntity<?> getUsers() {
-        return null;
+    public ResponseEntity<?> getUsers(SearchRequest request) {
+        SearchSpecification<User> specification = new SearchSpecification<>(request);
+        Pageable pageable = SearchSpecification.getPageable(request.getPage(), request.getSize());
+        Page<User> page = userRepository.findAll(specification, pageable);
+        List<UserResponse> users = page.getContent()
+                                        .stream()
+                                        .map(UserService::mapToUserResponse).toList();
+        PagedResponse<UserResponse> pagedResponse = new PagedResponse<>(users, page.getNumber(),
+                page.getSize(), page.getTotalElements(), page.getTotalPages(), page.isLast());
+        return responseHelper.success(pagedResponse);
     }
 
     public ResponseEntity<?> getUserById(Long id) {
@@ -112,5 +128,22 @@ public class UserService {
             throw new CustomException(responseHelper.userDoesNotExist());
         });
         return responseHelper.success(new UserDto(user));
+    }
+
+
+    public Optional<User> getAdministrator(){
+        return userRepository.findFirstByFirstNameAndLastName("Admin", "Admin");
+    }
+
+    public static UserResponse mapToUserResponse(User user){
+        return UserResponse
+                .builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .registeredDate(user.getCreatedAt())
+                .username(user.getUsername())
+                .phoneNumber(user.getPhoneNumber())
+                .build();
     }
 }

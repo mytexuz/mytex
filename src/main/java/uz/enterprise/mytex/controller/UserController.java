@@ -16,6 +16,7 @@ import uz.enterprise.mytex.common.Generated;
 import uz.enterprise.mytex.dto.ChangeStatusDto;
 import uz.enterprise.mytex.dto.RegisterDto;
 import uz.enterprise.mytex.dto.UserUpdateDto;
+import uz.enterprise.mytex.dto.request.SearchRequest;
 import uz.enterprise.mytex.service.UserService;
 
 @RestController
@@ -44,10 +45,9 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
-    @GetMapping(value = "/get-users")
-    @Generated
-    public ResponseEntity<?> getUsers() {
-        return userService.getUsers();
+    @PutMapping(value = "/get-users")
+    public ResponseEntity<?> getUsers(@RequestBody SearchRequest search) throws Exception{
+        return userService.getUsers(search);
     }
 
 }
