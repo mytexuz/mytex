@@ -25,6 +25,7 @@ public class UserDto {
     private String username;
     private String email;
     private String status;
+    private String lang;
     private String registeredDate;
 
 
@@ -39,5 +40,6 @@ public class UserDto {
         this.phoneNumber = user.getPhoneNumber();
         this.registeredDate = user.getCreatedAt().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
         this.status = user.getStatus().name();
+        this.lang = user.getLang().name();
     }
 }

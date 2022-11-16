@@ -15,17 +15,36 @@ databaseChangeLog:
                     nullable: false
                   remarks: unique id of the device record
               - column:
-                  name: name
-                  type: varchar(128)
+                  name: device_type
+                  type: varchar(16)
                   remarks: title of the device
               - column:
                   name: mac_address
                   type: varchar(64)
                   remarks: mac address of the device
               - column:
+                  name: ip_address
+                  type: varchar(64)
+                  remarks: ip address of the device
+              - column:
+                  name: user_agent
+                  type: text
+                  remarks: user agent browser of the device
+              - column:
                   name: device_id
                   type: varchar(128)
                   remarks: unique id of the device
+              - column:
+                  name: status
+                  type: varchar(16)
+                  defaultValue: 'ACTIVE'
+                  remarks: device’s status
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: id of the user who uses the device
               - column:
                   name: created_at
                   type: timestamp
@@ -40,3 +59,10 @@ databaseChangeLog:
                   defaultValue: now()
                   remarks: updated date and time of the device
             remarks: Table for storing devices
+        - addForeignKeyConstraint:
+            baseTableName: devices
+            baseColumnNames: user_id
+            constraintName: device_user_fk
+            referencedTableName: users
+            referencedColumnNames: id
+            deferrable: true

@@ -59,6 +59,10 @@ databaseChangeLog:
                   defaultValue: 'PENDING'
                   remarks: user’s status
               - column:
+                  name: lang
+                  type: varchar(16)
+                  remarks: user’s language
+              - column:
                   name: created_by
                   type: bigint
                   constraints:

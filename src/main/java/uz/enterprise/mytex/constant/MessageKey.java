@@ -12,6 +12,11 @@ public interface MessageKey {
     String SUCCESS = "success";
     String ACCOUNT_PENDING = "auth.account.pending";
     String ACCOUNT_BLOCKED = "auth.account.blocked";
+    String DEVICE_BLOCKED = "device.blocked";
+    String SESSION_DISABLED = "session.disabled";
     String FORBIDDEN = "forbidden";
     String MAX_SIZE = "max.size.file";
+    String DEVICE_ALREADY_BLOCKED = "device.already.blocked";
+    String DEVICE_ALREADY_UNBLOCKED = "device.already.unblocked";
+    String DEVICE_NOT_BLOCKED = "device.not.blocked";
 }

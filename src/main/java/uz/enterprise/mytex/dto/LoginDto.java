@@ -19,4 +19,5 @@ public class LoginDto {
 
     @NotBlank(message = "auth.password.not.valid")
     private String password;
+    private DeviceCreateDto device;
 }

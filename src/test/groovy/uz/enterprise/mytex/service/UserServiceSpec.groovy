@@ -53,7 +53,7 @@ class UserServiceSpec extends BaseSpecification {
                 userRepository,
                 passwordEncoder,
                 authenticationManager,
-                jwtTokenService, responseHelper, passwordGeneratorHelper)
+                jwtTokenService, responseHelper, deviceRepository, sessionRepositor, passwordGeneratorHelper)
     }
 
     def "Get list of users, search and filter result -> success"(){

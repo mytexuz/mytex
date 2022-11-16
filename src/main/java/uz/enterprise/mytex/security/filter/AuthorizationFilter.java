@@ -17,13 +17,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import uz.enterprise.mytex.entity.Session;
+import uz.enterprise.mytex.enums.Status;
+import uz.enterprise.mytex.exception.CustomAuthenticationException;
 import uz.enterprise.mytex.exception.CustomException;
 import uz.enterprise.mytex.helper.ResponseHelper;
 import uz.enterprise.mytex.security.CustomUserDetails;
 import uz.enterprise.mytex.security.PermissionDto;
 import uz.enterprise.mytex.service.CustomUserDetailService;
+import uz.enterprise.mytex.service.FraudService;
 import uz.enterprise.mytex.service.JwtTokenService;
 import uz.enterprise.mytex.service.PropertyService;
+import uz.enterprise.mytex.service.SessionService;
 
 @Component
 @RequiredArgsConstructor
@@ -31,7 +36,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private final CustomUserDetailService customUserDetailService;
     private final JwtTokenService jwtTokenService;
     private final PropertyService propertyService;
+    private final SessionService sessionService;
     private final ResponseHelper responseHelper;
+    private final FraudService fraudService;
 
     private List<String> getWhiteList() {
         String value = propertyService.getValue("WHITE_LIST");
@@ -60,16 +67,25 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         String requestUri = request.getRequestURI();
         if (!isOpenPath(requestUri)) {
             try {
                 String token = request.getHeader("token");
+                String deviceId = request.getHeader("device-id");
+                if (fraudService.isDeviceBlockedByDeviceId(deviceId)) {
+                    throw new CustomException(responseHelper.deviceBlocked());
+                }
                 if (jwtTokenService.isValid(token)) {
                     String username = jwtTokenService.subject(token);
                     CustomUserDetails userDetails = customUserDetailService.loadUserByUsername(username);
+                    Session session = sessionService.getSessionByUserId(userDetails.getId());
+                    if (!session.getToken().equals(token)) {
+                        throw new CustomException(responseHelper.unauthorized());
+                    }
+                    if (session.getStatus().equals(Status.DISABLED)) {
+                        throw new CustomException(responseHelper.sessionDisabled());
+                    }
                     Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
                     for (GrantedAuthority authority : authorities) {
                         var permittedPath = ((PermissionDto) authority).getPath();
@@ -77,16 +93,21 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                             throw new CustomException(responseHelper.forbidden());
                         }
                     }
-                    UsernamePasswordAuthenticationToken authenticationToken =
-                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    authenticate(request, userDetails);
                     logger.info("User authenticated by username - %s".formatted(username));
                 }
+            } catch (CustomException e) {
+                throw new CustomException(e.getResponse());
             } catch (Exception e) {
                 logger.error("internal error", e);
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    private void authenticate(HttpServletRequest request, CustomUserDetails userDetails) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
 }

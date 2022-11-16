@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.enterprise.mytex.enums.Lang;
 
 @Getter
 @Setter
@@ -32,4 +33,6 @@ public class RegisterDto {
 
     @Email(message = "user.email.not.valid")
     private String email;
+
+    private Lang lang;
 }

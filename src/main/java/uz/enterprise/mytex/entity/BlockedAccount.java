@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.temporal.ChronoUnit;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,8 +21,8 @@ import static uz.enterprise.mytex.constant.TableNames.TB_BLOCKED_ACCOUNTS;
 
 import lombok.experimental.SuperBuilder;
 import uz.enterprise.mytex.entity.audit.Auditable;
-import uz.enterprise.mytex.entity.audit.TimedAuditable;
-import uz.enterprise.mytex.enums.Status;
+import uz.enterprise.mytex.enums.BlockingStatus;
+import uz.enterprise.mytex.enums.Period;
 
 @Entity
 @Setter
@@ -38,8 +37,8 @@ public class BlockedAccount extends Auditable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "device_id", nullable = false)
-    private Device device;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blocked_by")
@@ -47,11 +46,11 @@ public class BlockedAccount extends Auditable {
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private BlockingStatus status;
 
     @Column(name = "period", nullable = false)
     @Enumerated(EnumType.STRING)
-    private ChronoUnit period;
+    private Period period;
 
     @Column(name = "reason")
     private String reason;

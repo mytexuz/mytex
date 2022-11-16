@@ -21,6 +21,8 @@ public class CustomUserDetails implements UserDetails {
     private Long id;
     private String username;
     private String fullName;
+    private String phoneNumber;
+    private String email;
     private String password;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
