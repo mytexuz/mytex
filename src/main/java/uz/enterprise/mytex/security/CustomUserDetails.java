@@ -1,6 +1,7 @@
 package uz.enterprise.mytex.security;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Builder;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import uz.enterprise.mytex.entity.User;
 import uz.enterprise.mytex.enums.Lang;
 import uz.enterprise.mytex.enums.Status;
 
@@ -65,7 +67,7 @@ public class CustomUserDetails implements UserDetails {
     }
 
     public Lang getLang() {
-        return lang;
+        return Objects.isNull(lang) ? Lang.UZ : lang;
     }
 
     public Status getStatus() {

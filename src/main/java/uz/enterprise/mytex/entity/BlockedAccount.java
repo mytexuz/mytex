@@ -19,6 +19,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import static uz.enterprise.mytex.constant.TableNames.TB_BLOCKED_ACCOUNTS;
+
+import lombok.experimental.SuperBuilder;
 import uz.enterprise.mytex.entity.audit.Auditable;
 import uz.enterprise.mytex.entity.audit.TimedAuditable;
 import uz.enterprise.mytex.enums.Status;
@@ -26,7 +28,7 @@ import uz.enterprise.mytex.enums.Status;
 @Entity
 @Setter
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = TB_BLOCKED_ACCOUNTS)

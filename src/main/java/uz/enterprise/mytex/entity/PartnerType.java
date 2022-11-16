@@ -13,12 +13,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import static uz.enterprise.mytex.constant.TableNames.TB_PARTNER_TYPE;
+
+import lombok.experimental.SuperBuilder;
 import uz.enterprise.mytex.entity.audit.TimedAuditable;
 
 @Entity
 @Setter
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = TB_PARTNER_TYPE)
