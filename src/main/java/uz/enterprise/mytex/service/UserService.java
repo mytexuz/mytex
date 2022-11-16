@@ -3,8 +3,6 @@ package uz.enterprise.mytex.service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -25,11 +23,11 @@ import uz.enterprise.mytex.dto.RegisterDto;
 import uz.enterprise.mytex.dto.TokenResponseDto;
 import uz.enterprise.mytex.dto.UserDto;
 import uz.enterprise.mytex.dto.UserUpdateDto;
-import uz.enterprise.mytex.entity.Device;
-import uz.enterprise.mytex.entity.Session;
 import uz.enterprise.mytex.dto.request.SearchRequest;
 import uz.enterprise.mytex.dto.response.PagedResponse;
 import uz.enterprise.mytex.dto.response.UserResponse;
+import uz.enterprise.mytex.entity.Device;
+import uz.enterprise.mytex.entity.Session;
 import uz.enterprise.mytex.entity.User;
 import uz.enterprise.mytex.enums.Status;
 import uz.enterprise.mytex.helper.PasswordGeneratorHelper;
@@ -109,7 +107,9 @@ public class UserService {
             return responseHelper.noDataFound();
         }
         Session session = sessionOptional.get();
-        return responseHelper.success(new TokenResponseDto(session.getToken(), userDetails.getFullName()));
+        session.setStatus(Status.ACTIVE);
+        Session save = sessionRepository.save(session);
+        return responseHelper.success(new TokenResponseDto(save.getToken(), userDetails.getFullName()));
     }
 
     public ResponseEntity<?> register(RegisterDto registerDto) {
@@ -174,8 +174,8 @@ public class UserService {
         Pageable pageable = SearchSpecification.getPageable(request.getPage(), request.getSize());
         Page<User> page = userRepository.findAll(specification, pageable);
         List<UserResponse> users = page.getContent()
-                                        .stream()
-                                        .map(UserService::mapToUserResponse).toList();
+                .stream()
+                .map(UserService::mapToUserResponse).toList();
         PagedResponse<UserResponse> pagedResponse = new PagedResponse<>(users, page.getNumber(),
                 page.getSize(), page.getTotalElements(), page.getTotalPages(), page.isLast());
         return responseHelper.success(pagedResponse);
@@ -215,11 +215,7 @@ public class UserService {
     }
 
 
-    public Optional<User> getAdministrator(){
-        return userRepository.findFirstByFirstNameAndLastName("Admin", "Admin");
-    }
-
-    public static UserResponse mapToUserResponse(User user){
+    public static UserResponse mapToUserResponse(User user) {
         return UserResponse
                 .builder()
                 .id(user.getId())

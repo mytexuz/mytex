@@ -12,6 +12,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -50,6 +51,9 @@ public class JwtUtil {
      * @return <code>true</code> if JWT subject is not null, otherwise <code>false</code>
      */
     public boolean isTokenValid(String token, String secret) {
+        if (StringUtils.isBlank(token)) {
+            return false;
+        }
         String subject = getSubject(token, secret);
         return Objects.nonNull(subject);
     }

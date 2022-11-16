@@ -4,22 +4,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.Collection;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import static uz.enterprise.mytex.constant.TableNames.TB_PERMISSION;
-
 import lombok.experimental.SuperBuilder;
+import static uz.enterprise.mytex.constant.TableNames.TB_PERMISSION;
 import uz.enterprise.mytex.entity.audit.Auditable;
 import uz.enterprise.mytex.enums.Status;
 

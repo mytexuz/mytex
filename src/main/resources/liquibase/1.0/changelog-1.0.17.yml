@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Models table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: models
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the group of model record
+              - column:
+                  name: model_name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+                  remarks: name of the model record
+              - column:
+                  name: model_number
+                  type: varchar(32)
+                  remarks: unique number of the model record
+              - column:
+                  name: composition
+                  type: text
+                  remarks: composition of the model record
+              - column:
+                  name: client_model_number
+                  type: varchar(64)
+                  remarks: number of client for order model
+              - column:
+                  name: is_license_required
+                  type: boolean
+                  remarks: is license required
+              - column:
+                  name: group_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: id of group which belongs to model
+              - column:
+                  name: created_by
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: the user who created the record
+              - column:
+                  name: updated_by
+                  type: bigint
+                  remarks: the user who updated the record lastly
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created time of the record
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated time of the record
+            remarks: Table for storing group of model
+        - addForeignKeyConstraint:
+            baseTableName: models
+            baseColumnNames: group_id
+            constraintName: model_group_model_fk
+            referencedTableName: model_groups
+            referencedColumnNames: id
+            deferrable: true

@@ -13,13 +13,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import static uz.enterprise.mytex.constant.TableNames.TB_SESSION;
-
 import lombok.experimental.SuperBuilder;
+import static uz.enterprise.mytex.constant.TableNames.TB_SESSION;
 import uz.enterprise.mytex.entity.audit.TimedAuditable;
 import uz.enterprise.mytex.enums.Status;
 

@@ -8,13 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import static uz.enterprise.mytex.constant.TableNames.TB_PARTNER_TYPE;
-
 import lombok.experimental.SuperBuilder;
+import static uz.enterprise.mytex.constant.TableNames.TB_PARTNER_TYPE;
 import uz.enterprise.mytex.entity.audit.TimedAuditable;
 
 @Entity
