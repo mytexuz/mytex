@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Exchange Rate table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: exchange_rate
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the exchange rate record
+              - column:
+                  name: currency
+                  type: varchar(8)
+                  constraints:
+                    nullable: false
+                  remarks: currency name of the rate record
+              - column:
+                  name: rate
+                  type: numeric
+                  remarks: rate of the exchange rate record
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false
+                  remarks: is active or not of the file record
+              - column:
+                  name: created_by
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: the user who created the record
+              - column:
+                  name: updated_by
+                  type: bigint
+                  remarks: the user who updated the record lastly
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created time of the record
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated time of the record
+            remarks: Table for storing exchange rate

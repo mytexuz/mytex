@@ -18,6 +18,6 @@ public interface TableNames {
     String TB_MODEL = "models";
     String TB_PREFINANCE = "prefinances";
     String TB_RESOURCE = "resources";
-    String TB_MODEL_PHOTO = "model_photos";
+    String TB_MODEL_RESOURCE = "model_resources";
     String TB_EXCHANGE_RATE = "exchange_rate";
 }

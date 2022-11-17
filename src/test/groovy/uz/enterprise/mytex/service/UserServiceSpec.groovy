@@ -1,6 +1,5 @@
 package uz.enterprise.mytex.service
 
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -9,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.crypto.password.PasswordEncoder
-import spock.lang.Specification
 import uz.enterprise.mytex.BaseSpecification
 import uz.enterprise.mytex.dto.*
 import uz.enterprise.mytex.dto.request.FilterRequest
@@ -18,16 +16,15 @@ import uz.enterprise.mytex.dto.request.SortRequest
 import uz.enterprise.mytex.dto.response.PagedResponse
 import uz.enterprise.mytex.dto.response.ResponseData
 import uz.enterprise.mytex.dto.response.UserResponse
+import uz.enterprise.mytex.entity.Device
 import uz.enterprise.mytex.entity.Localization
+import uz.enterprise.mytex.entity.Session
 import uz.enterprise.mytex.entity.User
-import uz.enterprise.mytex.enums.Lang
-import uz.enterprise.mytex.enums.Operator
-import uz.enterprise.mytex.enums.PropertyType
-import uz.enterprise.mytex.enums.SortDirection
-import uz.enterprise.mytex.enums.Status
-import uz.enterprise.mytex.exception.CustomException
+import uz.enterprise.mytex.enums.*
 import uz.enterprise.mytex.helper.PasswordGeneratorHelper
 import uz.enterprise.mytex.helper.ResponseHelper
+import uz.enterprise.mytex.repository.DeviceRepository
+import uz.enterprise.mytex.repository.SessionRepository
 import uz.enterprise.mytex.repository.UserRepository
 import uz.enterprise.mytex.repository.specification.SearchSpecification
 import uz.enterprise.mytex.security.CustomUserDetails
@@ -45,6 +42,8 @@ class UserServiceSpec extends BaseSpecification {
     private JwtTokenService jwtTokenService = Mock()
     private ResponseHelper responseHelper = Mock()
     private PasswordGeneratorHelper passwordGeneratorHelper = Mock()
+    private SessionRepository sessionRepository = Mock()
+    private DeviceRepository deviceRepository = Mock()
     private Localization localization
 
     void setup() {
@@ -53,10 +52,10 @@ class UserServiceSpec extends BaseSpecification {
                 userRepository,
                 passwordEncoder,
                 authenticationManager,
-                jwtTokenService, responseHelper, deviceRepository, sessionRepositor, passwordGeneratorHelper)
+                jwtTokenService, responseHelper, deviceRepository, sessionRepository, passwordGeneratorHelper)
     }
 
-    def "Get list of users, search and filter result -> success"(){
+    def "Get list of users, search and filter result -> success"() {
         given:
         def filters = [
                 new FilterRequest(key: "lastName", operator: Operator.LIKE, propertyType: PropertyType.STRING, value: "yev"),
@@ -72,8 +71,8 @@ class UserServiceSpec extends BaseSpecification {
         def users = [
                 User.builder().id(1).firstName("Admin")
                         .lastName("Adminov").phoneNumber("+998904562122")
-                .status(Status.ACTIVE).username("admin1")
-                .createdAt(LocalDateTime.now()).build(),
+                        .status(Status.ACTIVE).username("admin1")
+                        .createdAt(LocalDateTime.now()).build(),
                 User.builder().id(2).firstName("Shohjahon")
                         .lastName("Rahmataliyev").phoneNumber("+99891457832")
                         .status(Status.ACTIVE).username("awesome")
@@ -89,7 +88,7 @@ class UserServiceSpec extends BaseSpecification {
         def content = pagedResult
                 .getContent()
                 .stream()
-                .map(UserService::mapToUserResponse).toList();
+                .map(UserService::mapToUserResponse).toList()
 
         def pagedResponse = new PagedResponse<>(content, pagedResult.getNumber(),
                 pagedResult.getSize(), pagedResult.getTotalElements(),
@@ -125,12 +124,16 @@ class UserServiceSpec extends BaseSpecification {
         given:
         def loginDto = random.nextObject(LoginDto)
 
+        def session = random.nextObject(Session)
+
+        def device = random.nextObject(Device)
+
         def auth = new UsernamePasswordAuthenticationToken(loginDto.getUsernameOrEmail(), loginDto.getPassword())
 
         def user = random.nextObject(User)
 
         def userDetails = new CustomUserDetails(null, user.id,
-                user.username, user.username + " " + user.lastName,
+                user.username, user.username + " " + user.lastName, user.getPhoneNumber(), user.getEmail(),
                 user.password, true, true,
                 true, true, Lang.UZ, Status.ACTIVE)
         def token = random.nextObject(UUID) as String
@@ -148,9 +151,14 @@ class UserServiceSpec extends BaseSpecification {
 
         then:
         1 * authenticationManager.authenticate(auth) >> authentication
-        1 * jwtTokenService.generateToken(user.username) >> token
         1 * responseHelper.success(_ as Object) >> successResponse
         1 * authentication.principal >> userDetails
+        1 * deviceRepository.existsDeviceByUserId(user.id) >> true
+        1 * deviceRepository.findByUserId(user.id) >> Optional.of(device)
+        1 * sessionRepository.existsSessionByUserId(user.id) >> true
+        1 * sessionRepository.findSessionByUserId(user.id) >> Optional.of(session)
+        1 * userRepository.findById(user.id) >> Optional.of(user)
+        1 * sessionRepository.save(session) >> session
 
         def actual = response as ResponseEntity<Object>
 
@@ -285,13 +293,14 @@ class UserServiceSpec extends BaseSpecification {
         def userDoesNotExists = new ResponseEntity(responseData, HttpStatus.UNAUTHORIZED)
 
         when:
-        userService.update(updateDto)
+        def response = userService.update(updateDto)
 
         then:
         1 * userRepository.findById(_ as Long) >> Optional.ofNullable(null)
         1 * responseHelper.userDoesNotExist() >> userDoesNotExists
 
-        thrown(CustomException)
+        def actual = response as ResponseEntity<ResponseData<String>>
+        actual == userDoesNotExists
     }
 
     def "User service change status by #id -> success"() {
@@ -331,13 +340,16 @@ class UserServiceSpec extends BaseSpecification {
         def userDoesNotExists = new ResponseEntity(responseData, HttpStatus.UNAUTHORIZED)
 
         when:
-        userService.changeStatus(statusDto)
+        def response = userService.changeStatus(statusDto)
 
         then:
         1 * userRepository.findById(_ as Long) >> Optional.ofNullable(null)
         1 * responseHelper.userDoesNotExist() >> userDoesNotExists
 
-        thrown(CustomException)
+        def actual = response as ResponseEntity<ResponseData<String>>
+
+        actual == userDoesNotExists
+
     }
 
     def "User service get user by #id -> success "() {
@@ -377,13 +389,14 @@ class UserServiceSpec extends BaseSpecification {
         def userDoesNotExists = new ResponseEntity(responseData, HttpStatus.UNAUTHORIZED)
 
         when:
-        userService.getUserById(userId)
+        def response = userService.getUserById(userId)
 
         then:
         1 * userRepository.findById(userId) >> Optional.ofNullable(null)
         1 * responseHelper.userDoesNotExist() >> userDoesNotExists
+        def actual = response as ResponseEntity<ResponseData<String>>
 
-        thrown(CustomException)
+        actual == userDoesNotExists
     }
 
 }

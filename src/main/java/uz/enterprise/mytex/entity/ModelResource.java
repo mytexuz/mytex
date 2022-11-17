@@ -2,6 +2,8 @@ package uz.enterprise.mytex.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,8 +17,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import static uz.enterprise.mytex.constant.TableNames.TB_MODEL;
+import static uz.enterprise.mytex.constant.TableNames.TB_MODEL_RESOURCE;
 import uz.enterprise.mytex.entity.audit.Auditable;
+import uz.enterprise.mytex.enums.FileType;
 
 @Entity
 @Setter
@@ -24,32 +27,24 @@ import uz.enterprise.mytex.entity.audit.Auditable;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = TB_MODEL)
-public class Model extends Auditable {
+@Table(name = TB_MODEL_RESOURCE)
+public class ModelResource extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "model_name")
-    private String modelName;
+    @Column(name = "title")
+    private String title;
 
-    @Column(name = "model_number")
-    private String modelNumber;
-
-    @Column(name = "composition")
-    private String composition;
-
-    @Column(name = "client_model_number")
-    private String clientModelNumber;
-
-    @Column(name = "is_license_required")
-    private boolean isLicenseRequired;
+    @Column(name = "file_type")
+    @Enumerated(EnumType.STRING)
+    private FileType fileType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "partner_id")
-    private Partner partner;
+    @JoinColumn(name = "model_id")
+    private Model model;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    private ModelGroup modelGroup;
+    @JoinColumn(name = "photo_id")
+    private Resource resource;
 }

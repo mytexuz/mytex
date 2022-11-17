@@ -37,6 +37,12 @@ databaseChangeLog:
                   type: boolean
                   remarks: is license required
               - column:
+                  name: partner_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: id of partner
+              - column:
                   name: group_id
                   type: bigint
                   constraints:
@@ -66,6 +72,13 @@ databaseChangeLog:
                   defaultValue: now()
                   remarks: updated time of the record
             remarks: Table for storing group of model
+        - addForeignKeyConstraint:
+            baseTableName: models
+            baseColumnNames: partner_id
+            constraintName: model_partner_model_fk
+            referencedTableName: partners
+            referencedColumnNames: id
+            deferrable: true
         - addForeignKeyConstraint:
             baseTableName: models
             baseColumnNames: group_id

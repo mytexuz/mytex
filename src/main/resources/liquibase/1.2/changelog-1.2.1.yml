@@ -1,0 +1,147 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Pre-finances table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: prefinances
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the prefinance record
+              - column:
+                  name: prefinance_number
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+                  remarks: unique number of the prefinance record
+              - column:
+                  name: model_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: id of the model record
+              - column:
+                  name: primary_currency
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+                  remarks: primary currency of the prefinance record
+              - column:
+                  name: secondary_currency
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+                  remarks: secondary currency of the prefinance record
+              - column:
+                  name: tertiary_currency
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+                  remarks: tertiary currency of the prefinance record
+              - column:
+                  name: primary_rate
+                  type: numeric
+                  constraints:
+                    nullable: false
+                  remarks: primary currency of the prefinance record
+              - column:
+                  name: secondary_rate
+                  type: numeric
+                  constraints:
+                    nullable: false
+                  remarks: secondary currency of the prefinance record
+              - column:
+                  name: tertiary_rate
+                  type: numeric
+                  constraints:
+                    nullable: false
+                  remarks: tertiary currency of the prefinance record
+              - column:
+                  name: description
+                  type: text
+                  remarks: description of the prefinance record
+              - column:
+                  name: overproduction_percent
+                  type: numeric
+                  remarks: over production percent of the prefinance record
+              - column:
+                  name: loss_percent
+                  type: numeric
+                  remarks: loss percent of the prefinance record
+              - column:
+                  name: general_expense_percent
+                  type: numeric
+                  remarks: general expense percent of the prefinance record
+              - column:
+                  name: extra_expense_percent
+                  type: numeric
+                  remarks: extra expense percent of the prefinance record
+              - column:
+                  name: target_profit_percent
+                  type: numeric
+                  remarks: target profit percent of the prefinance record
+              - column:
+                  name: given_price
+                  type: numeric
+                  constraints:
+                    nullable: false
+                  remarks: given price of the prefinance record
+              - column:
+                  name: given_price_currency
+                  type: varchar(8)
+                  constraints:
+                    nullable: false
+                  remarks: given price currency of the prefinance record
+              - column:
+                  name: discount_percent
+                  type: numeric
+                  remarks: discount percent of the prefinance record
+              - column:
+                  name: status
+                  type: varchar(16)
+                  defaultValue: 'ACTIVE'
+                  remarks: status of the prefinance record
+              - column:
+                  name: created_by
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: the user who created the record
+              - column:
+                  name: updated_by
+                  type: bigint
+                  remarks: the user who updated the record lastly
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created time of the record
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated time of the record
+            remarks: Table for storing prefinance
+        - addForeignKeyConstraint:
+            baseTableName: prefinances
+            baseColumnNames: model_id
+            constraintName: prefinaces_model_fk
+            referencedTableName: models
+            referencedColumnNames: id
+            deferrable: true
+        - addForeignKeyConstraint:
+            baseTableName: prefinances
+            baseColumnNames: model_id
+            constraintName: prefinaces_partner_fk
+            referencedTableName: partners
+            referencedColumnNames: id
+            deferrable: true

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import uz.enterprise.mytex.BaseSpecification
+import uz.enterprise.mytex.dto.DeviceCreateDto
 import uz.enterprise.mytex.dto.LoginDto
 import uz.enterprise.mytex.dto.TokenResponseDto
 import uz.enterprise.mytex.exception.GlobalExceptionHandler
@@ -30,7 +31,7 @@ class AuthControllerSpec extends BaseSpecification {
 
     def "test authentication -> success"() {
         given:
-        def loginDto = new LoginDto("awesome", "123")
+        def loginDto = new LoginDto("awesome", "123", new DeviceCreateDto())
         def requestBody = new ObjectMapper().writeValueAsString(loginDto)
         def token = "AAKSNKANSKASNAKJNSAKNAK232NK23NK2NK"
 
