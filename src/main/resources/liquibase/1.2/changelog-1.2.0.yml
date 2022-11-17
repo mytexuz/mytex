@@ -1,0 +1,76 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Model Photos table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: model_resources
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the model's photo record
+              - column:
+                  name: title
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+                  remarks: title of the model's photo record
+              - column:
+                  name: file_type
+                  type: varchar(8)
+                  remarks: type of file
+              - column:
+                  name: model_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: id of the model record
+              - column:
+                  name: resource_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: id of photo which belongs to model
+              - column:
+                  name: created_by
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: the user who created the record
+              - column:
+                  name: updated_by
+                  type: bigint
+                  remarks: the user who updated the record lastly
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created time of the record
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated time of the record
+            remarks: Table for storing model's photo
+        - addForeignKeyConstraint:
+            baseTableName: model_resources
+            baseColumnNames: model_id
+            constraintName: model_resources_model_fk
+            referencedTableName: models
+            referencedColumnNames: id
+            deferrable: true
+        - addForeignKeyConstraint:
+            baseTableName: model_resources
+            baseColumnNames: resource_id
+            constraintName: model_resources_resources_fk
+            referencedTableName: resources
+            referencedColumnNames: id
+            deferrable: true

@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Model Groups table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: model_groups
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the group of model record
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+                  remarks: name of the group of model
+              - column:
+                  name: description
+                  type: text
+                  remarks: description of the  group of model
+              - column:
+                  name: created_by
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: the user who created the record
+              - column:
+                  name: updated_by
+                  type: bigint
+                  remarks: the user who updated the record lastly
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created time of the record
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated time of the record
+            remarks: Table for storing group of model

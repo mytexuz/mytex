@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.enterprise.mytex.enums.Lang;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class UserUpdateDto {
-    @NotNull(message = "user.id.not.blank")
+    @NotNull(message = "user.id.not.null")
     private Long id;
 
     @NotBlank(message = "user.firstname.not.blank")
@@ -37,4 +38,6 @@ public class UserUpdateDto {
 
     @Email(message = "user.email.not.valid")
     private String email;
+
+    private Lang lang;
 }

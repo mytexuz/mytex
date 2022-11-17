@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create Resources table
+      author: Zuhriddin Shamsiddinov
+      changes:
+        - createTable:
+            tableName: resources
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: unique id of the resources record
+              - column:
+                  name: file_name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+                  remarks: generated name of the file record
+              - column:
+                  name: actual_filename
+                  type: varchar(64)
+                  remarks: actual name of the file record
+              - column:
+                  name: extension
+                  type: varchar(8)
+                  constraints:
+                    nullable: false
+                  remarks: extension of the file record
+              - column:
+                  name: type
+                  type: varchar(32)
+                  remarks: type of resource
+              - column:
+                  name: created_by
+                  type: bigint
+                  constraints:
+                    nullable: false
+                  remarks: the user who created the record
+              - column:
+                  name: updated_by
+                  type: bigint
+                  remarks: the user who updated the record lastly
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+                    updatable: false
+                  remarks: created time of the record
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  remarks: updated time of the record
+            remarks: Table for storing resources

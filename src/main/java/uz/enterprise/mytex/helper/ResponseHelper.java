@@ -1,7 +1,5 @@
 package uz.enterprise.mytex.helper;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,12 +53,24 @@ public class ResponseHelper {
         return prepareResponse(MessageKey.ACCOUNT_BLOCKED, HttpStatus.UNAUTHORIZED);
     }
 
+    public ResponseEntity<ResponseData<String>> deviceBlocked() {
+        return prepareResponse(MessageKey.DEVICE_BLOCKED, HttpStatus.UNAUTHORIZED);
+    }
+
+    public ResponseEntity<ResponseData<String>> sessionDisabled() {
+        return prepareResponse(MessageKey.SESSION_DISABLED, HttpStatus.UNAUTHORIZED);
+    }
+
     public ResponseEntity<ResponseData<String>> usernameExists() {
         return prepareResponse(MessageKey.USERNAME_EXISTS, HttpStatus.BAD_REQUEST);
     }
 
     public ResponseEntity<ResponseData<String>> emailExists() {
         return prepareResponse(MessageKey.EMAIL_EXISTS, HttpStatus.BAD_REQUEST);
+    }
+
+    public ResponseEntity<ResponseData<String>> deviceNotBlocked() {
+        return prepareResponse(MessageKey.DEVICE_NOT_BLOCKED, HttpStatus.BAD_REQUEST);
     }
 
     public ResponseEntity<ResponseData<String>> incorrectPassword() {
@@ -95,6 +105,14 @@ public class ResponseHelper {
         return prepareResponse(MessageKey.MAX_SIZE, HttpStatus.BAD_REQUEST);
     }
 
+    public ResponseEntity<Object> deviceAlreadyBlocked(String blockedBy) {
+        return prepareResponse(blockedBy, MessageKey.DEVICE_ALREADY_BLOCKED);
+    }
+
+    public ResponseEntity<Object> deviceAlreadyUnBlocked(String unblockedBy) {
+        return prepareResponse(unblockedBy, MessageKey.DEVICE_ALREADY_UNBLOCKED);
+    }
+
     private ResponseEntity<ResponseData<String>> prepareResponse(String key, HttpStatus status) {
         ResponseData<String> response;
         if (isSuccessStatus(status)) {
@@ -125,6 +143,13 @@ public class ResponseHelper {
         result.put("message", localizationService.getMessage(key));
         result.put("timestamp", getTime());
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    private ResponseEntity<Object> prepareResponse(String data, String key) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("message", localizationService.getMessage(key).formatted(data));
+        result.put("timestamp", getTime());
+        return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
     }
 
     private ResponseEntity<ResponseData<String>> prepareResponse(String key) {

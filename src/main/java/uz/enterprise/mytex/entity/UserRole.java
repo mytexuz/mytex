@@ -12,14 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import static uz.enterprise.mytex.constant.TableNames.TB_USER_ROLE;
-
 import lombok.experimental.SuperBuilder;
+import static uz.enterprise.mytex.constant.TableNames.TB_USER_ROLE;
 import uz.enterprise.mytex.entity.audit.Auditable;
 import uz.enterprise.mytex.enums.Status;
 

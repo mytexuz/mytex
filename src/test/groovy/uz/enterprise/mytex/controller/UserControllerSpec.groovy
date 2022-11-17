@@ -12,6 +12,7 @@ import uz.enterprise.mytex.dto.ChangeStatusDto
 import uz.enterprise.mytex.dto.RegisterDto
 import uz.enterprise.mytex.dto.UserDto
 import uz.enterprise.mytex.dto.UserUpdateDto
+import uz.enterprise.mytex.enums.Lang
 import uz.enterprise.mytex.enums.Status
 import uz.enterprise.mytex.exception.GlobalExceptionHandler
 import uz.enterprise.mytex.service.UserService
@@ -36,7 +37,7 @@ class UserControllerSpec extends BaseSpecification {
     def "Test User registration"() {
         given:
         def registerDto = new RegisterDto("John", "John",
-                "+998998653816", "", "jones", "zuh@gmail.team")
+                "+998998653816", "", "jones", "zuh@gmail.team", Lang.UZ)
         def requestBody = new ObjectMapper().writeValueAsString(registerDto)
         def token = UUID.randomUUID().toString()
         def expectedResponse = '''
@@ -61,7 +62,7 @@ class UserControllerSpec extends BaseSpecification {
 
         def userDto = new UserDto(1, "John", "Jones",
                 "+998998653816", "", "PFz%L5u0(6",
-                "jones", "zuh@gmail.team", "PENDING", "10.11.2022 18:49:59")
+                "jones", "zuh@gmail.team", "PENDING", 'UZ', "10.11.2022 18:49:59")
 
         def successResponse = new ResponseEntity([
                 data     : userDto,
@@ -88,7 +89,7 @@ class UserControllerSpec extends BaseSpecification {
     def "Test update user's information"() {
         given:
         def updateDto = new UserUpdateDto(1, "John", "John",
-                "+998998653816", "", "jones", "zuh@gmail.team")
+                "+998998653816", "", "jones", "zuh@gmail.team", Lang.UZ)
         def requestBody = new ObjectMapper().writeValueAsString(updateDto)
         def token = UUID.randomUUID().toString()
         def expectedResponse = '''
@@ -113,7 +114,7 @@ class UserControllerSpec extends BaseSpecification {
 
         def userDto = new UserDto(1, "John", "Jones",
                 "+998998653816", "", "PFz%L5u0(6",
-                "jones", "zuh@gmail.team", "PENDING", "10.11.2022 18:49:59")
+                "jones", "zuh@gmail.team", "PENDING", 'UZ', "10.11.2022 18:49:59")
 
         def successResponse = new ResponseEntity([
                 data     : userDto,
@@ -207,7 +208,7 @@ class UserControllerSpec extends BaseSpecification {
 
         def userDto = new UserDto(1, "John", "Jones",
                 "+998998653816", "", "PFz%L5u0(6",
-                "jones", "zuh@gmail.team", "PENDING", "10.11.2022 18:49:59")
+                "jones", "zuh@gmail.team", "PENDING",'UZ' ,"10.11.2022 18:49:59")
 
         def successResponse = new ResponseEntity([
                 data     : userDto,

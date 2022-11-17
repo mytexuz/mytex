@@ -14,4 +14,10 @@ public interface TableNames {
     String TB_PARTNER_TYPE = "partner_types";
     String TB_LOCALIZATION = "localizations";
     String TB_PROPERTY = "properties";
+    String TB_MODEL_GROUP = "model_groups";
+    String TB_MODEL = "models";
+    String TB_PREFINANCE = "prefinances";
+    String TB_RESOURCE = "resources";
+    String TB_MODEL_RESOURCE = "model_resources";
+    String TB_EXCHANGE_RATE = "exchange_rate";
 }

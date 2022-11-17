@@ -14,7 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +21,7 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import static uz.enterprise.mytex.constant.TableNames.TB_USER;
 import uz.enterprise.mytex.entity.audit.Auditable;
+import uz.enterprise.mytex.enums.Lang;
 import uz.enterprise.mytex.enums.Status;
 
 @Entity
@@ -57,15 +57,24 @@ public class User extends Auditable {
 
     @Column(name = "email", unique = true)
     private String email;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Column(name = "lang")
+    @Enumerated(EnumType.STRING)
+    private Lang lang;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, optional = false)
     private Session session;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, optional = false)
     private UserRole userRole;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    private Device device;
 
     public void setSession(Session session) {
         if (session == null) {
@@ -87,5 +96,16 @@ public class User extends Auditable {
             userRole.setUser(this);
         }
         this.userRole = userRole;
+    }
+
+    public void setDevice(Device device) {
+        if (device == null) {
+            if (this.device != null) {
+                this.device.setUser(null);
+            }
+        } else {
+            device.setUser(this);
+        }
+        this.device = device;
     }
 }

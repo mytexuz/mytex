@@ -12,8 +12,8 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-import uz.enterprise.mytex.common.Generated;
 
 @Component
 public class JwtUtil {
@@ -40,7 +40,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(subject)
                 .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(now.plus(3650, ChronoUnit.DAYS)))
+                .setExpiration(Date.from(now.plus(7300, ChronoUnit.DAYS)))
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
@@ -51,6 +51,9 @@ public class JwtUtil {
      * @return <code>true</code> if JWT subject is not null, otherwise <code>false</code>
      */
     public boolean isTokenValid(String token, String secret) {
+        if (StringUtils.isBlank(token)) {
+            return false;
+        }
         String subject = getSubject(token, secret);
         return Objects.nonNull(subject);
     }

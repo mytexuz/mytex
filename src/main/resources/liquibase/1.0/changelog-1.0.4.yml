@@ -9,6 +9,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: bigint
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -23,13 +24,14 @@ databaseChangeLog:
                   remarks: id of the user
               - column:
                   name: token
-                  type: varchar(128)
+                  type: varchar(256)
                   constraints:
                     nullable: false
                   remarks: access of the session record
               - column:
                   name: status
                   type: varchar(16)
+                  defaultValue: 'ACTIVE'
                   remarks: session status
               - column:
                   name: created_at

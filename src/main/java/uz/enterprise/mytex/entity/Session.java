@@ -2,6 +2,8 @@ package uz.enterprise.mytex.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,15 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import static uz.enterprise.mytex.constant.TableNames.TB_SESSION;
-
 import lombok.experimental.SuperBuilder;
+import static uz.enterprise.mytex.constant.TableNames.TB_SESSION;
 import uz.enterprise.mytex.entity.audit.TimedAuditable;
+import uz.enterprise.mytex.enums.Status;
 
 @Entity
 @Setter
@@ -41,4 +43,8 @@ public class Session extends TimedAuditable {
 
     @Column(name = "token", nullable = false)
     private String token;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }

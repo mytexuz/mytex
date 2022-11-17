@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uz.enterprise.mytex.dto.LoginDto;
 import uz.enterprise.mytex.service.UserService;
@@ -20,5 +21,10 @@ public class AuthController {
     @PostMapping(value = "/login", produces = "application/json")
     public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginDto) {
         return userService.login(loginDto);
+    }
+
+    @PostMapping(value = "/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam("usernameOrEmail") String usernameOrEmail) {
+        return userService.resetPassword(usernameOrEmail);
     }
 }
