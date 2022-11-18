@@ -7,7 +7,6 @@ import spock.lang.Specification
 
 import static java.nio.charset.Charset.forName
 
-
 class BaseSpecification extends Specification {
 
     @Shared

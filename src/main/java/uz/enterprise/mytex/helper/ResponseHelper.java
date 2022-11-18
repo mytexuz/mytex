@@ -65,6 +65,10 @@ public class ResponseHelper {
         return prepareResponse(MessageKey.USERNAME_EXISTS, HttpStatus.BAD_REQUEST);
     }
 
+    public ResponseEntity<ResponseData<String>> operationFailed() {
+        return prepareResponse(MessageKey.OPERATION_FAILED, HttpStatus.BAD_REQUEST);
+    }
+
     public ResponseEntity<ResponseData<String>> emailExists() {
         return prepareResponse(MessageKey.EMAIL_EXISTS, HttpStatus.BAD_REQUEST);
     }

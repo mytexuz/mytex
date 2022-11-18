@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import uz.enterprise.mytex.exception.FileException;
 import uz.enterprise.mytex.service.MediaService;
 
 @RestController
@@ -16,7 +17,7 @@ public class MediaController {
     private final MediaService mediaService;
 
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
-    public ResponseEntity<?> upload(@RequestPart MultipartFile file) {
+    public ResponseEntity<?> upload(@RequestPart MultipartFile file) throws FileException {
         return mediaService.upload(file);
     }
 }

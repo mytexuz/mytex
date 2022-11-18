@@ -21,5 +21,6 @@ public interface MessageKey {
     String ACCOUNT_ALREADY_BLOCKED = "account.already.blocked";
     String ACCOUNT_ALREADY_UNBLOCKED = "account.already.unblocked";
     String DEVICE_NOT_BLOCKED = "device.not.blocked";
+    String OPERATION_FAILED = "operation.failed";
     String ACCOUNT_NOT_BLOCKED = "account.not.blocked";
 }

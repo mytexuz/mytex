@@ -109,6 +109,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return responseHelper.invalidFileSize();
     }
 
+    @ExceptionHandler(FileException.class)
+    public ResponseEntity<?> handleMaxUploadSizeExceededException(final FileException e) {
+        logger.error("max file upload size error: {}", getStacktrace(e));
+        return e.getResponse();
+    }
+
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> handleCustomException(final CustomException e) {
         return e.getResponse();

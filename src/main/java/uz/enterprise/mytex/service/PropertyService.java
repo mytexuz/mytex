@@ -2,9 +2,13 @@ package uz.enterprise.mytex.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import uz.enterprise.mytex.constant.AppConstants;
 import uz.enterprise.mytex.entity.Property;
 import uz.enterprise.mytex.repository.PropertyRepository;
 
+import static uz.enterprise.mytex.constant.PropertyConstants.MINIO_ACCESS_KEY;
+import static uz.enterprise.mytex.constant.PropertyConstants.MINIO_ENDPOINT;
+import static uz.enterprise.mytex.constant.PropertyConstants.MINIO_SECRET_KEY;
 import static uz.enterprise.mytex.constant.PropertyConstants.MONITORING_BOT_TOKEN;
 import static uz.enterprise.mytex.constant.PropertyConstants.MONITORING_BOT_USERNAME;
 import static uz.enterprise.mytex.constant.PropertyConstants.MONITORING_CHAT_ID;
@@ -20,6 +24,21 @@ public class PropertyService {
                 .orElse("");
     }
 
+    public String getGithubToken(){
+        return getValue(AppConstants.GITHUB_TOKEN);
+    }
+
+    public String getMinioAccessKey(){
+        return getValue(MINIO_ACCESS_KEY);
+    }
+
+    public String getMinioSecretKey(){
+        return getValue(MINIO_SECRET_KEY);
+    }
+
+    public String getMinioEndpoint(){
+        return getValue(MINIO_ENDPOINT);
+    }
     public String getBotToken(){
         return getValue(MONITORING_BOT_TOKEN);
     }

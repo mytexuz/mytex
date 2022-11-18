@@ -195,3 +195,10 @@ values ('account.not.blocked', 'EN',
         'Hisob hali qulflanmagan'),
        ('account.not.blocked', 'RU',
         'Аккаунт еще не заблокированоо');
+insert into public.localizations (key, lang, message)
+values ('operation.failed', 'EN',
+        'Operation failed'),
+       ('operation.failed', 'UZ',
+        'Amaliyot muvafaqqiyatsiz yakunlandi'),
+       ('operation.failed', 'RU',
+        'Операция не удалась');
