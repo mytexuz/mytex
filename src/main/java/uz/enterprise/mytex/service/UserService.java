@@ -2,6 +2,7 @@ package uz.enterprise.mytex.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,12 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 import uz.enterprise.mytex.common.Generated;
 import uz.enterprise.mytex.dto.ChangeLangDto;
 import uz.enterprise.mytex.dto.ChangeStatusDto;
-import uz.enterprise.mytex.dto.DeviceCreateDto;
+import uz.enterprise.mytex.dto.request.DeviceCreateRequest;
 import uz.enterprise.mytex.dto.LoginDto;
 import uz.enterprise.mytex.dto.RegisterDto;
 import uz.enterprise.mytex.dto.TokenResponseDto;
 import uz.enterprise.mytex.dto.UserDto;
-import uz.enterprise.mytex.dto.UserUpdateDto;
+import uz.enterprise.mytex.dto.request.UserUpdateRequest;
 import uz.enterprise.mytex.dto.request.SearchRequest;
 import uz.enterprise.mytex.dto.response.PagedResponse;
 import uz.enterprise.mytex.dto.response.UserResponse;
@@ -32,6 +33,7 @@ import uz.enterprise.mytex.entity.User;
 import uz.enterprise.mytex.enums.Status;
 import uz.enterprise.mytex.helper.PasswordGeneratorHelper;
 import uz.enterprise.mytex.helper.ResponseHelper;
+import uz.enterprise.mytex.helper.SecurityHelper;
 import uz.enterprise.mytex.repository.DeviceRepository;
 import uz.enterprise.mytex.repository.SessionRepository;
 import uz.enterprise.mytex.repository.UserRepository;
@@ -75,7 +77,7 @@ public class UserService {
         }
         User user = userOptional.get();
         if (!deviceRepository.existsDeviceByUserId(userId)) {
-            DeviceCreateDto deviceDto = loginDto.getDevice();
+            DeviceCreateRequest deviceDto = loginDto.getDevice();
             Device device = Device.builder()
                     .deviceId(UUID.randomUUID().toString())
                     .deviceType(deviceDto.getDeviceType())
@@ -135,7 +137,7 @@ public class UserService {
         return responseHelper.success(userDto);
     }
 
-    public ResponseEntity<?> update(UserUpdateDto userDto) {
+    public ResponseEntity<?> update(UserUpdateRequest userDto) {
         Optional<User> userOptional = userRepository.findById(userDto.getId());
         if (userOptional.isEmpty()) {
             return responseHelper.userDoesNotExist();
@@ -225,5 +227,29 @@ public class UserService {
                 .username(user.getUsername())
                 .phoneNumber(user.getPhoneNumber())
                 .build();
+    }
+
+    public ResponseEntity<?> logout() {
+        User currentUser = getCurrentUser();
+        if (Objects.isNull(currentUser)) {
+            return responseHelper.unauthorized();
+        }
+        Optional<Session> sessionOptional = sessionRepository.findSessionByUserId(currentUser.getId());
+        if (sessionOptional.isEmpty()) {
+            return responseHelper.unauthorized();
+        }
+        Session session = sessionOptional.get();
+        session.setStatus(Status.DISABLED);
+        sessionRepository.save(session);
+        return responseHelper.success();
+    }
+
+    private User getCurrentUser() {
+        CustomUserDetails currentUser = SecurityHelper.getCurrentUser();
+        if (Objects.nonNull(currentUser)) {
+            return userRepository.findById(currentUser.getId())
+                    .orElse(new User());
+        }
+        return null;
     }
 }
