@@ -11,7 +11,7 @@ import uz.enterprise.mytex.BaseSpecification
 import uz.enterprise.mytex.dto.ChangeStatusDto
 import uz.enterprise.mytex.dto.RegisterDto
 import uz.enterprise.mytex.dto.UserDto
-import uz.enterprise.mytex.dto.UserUpdateDto
+import uz.enterprise.mytex.dto.request.UserUpdateRequest
 import uz.enterprise.mytex.enums.Lang
 import uz.enterprise.mytex.enums.Status
 import uz.enterprise.mytex.exception.GlobalExceptionHandler
@@ -88,7 +88,7 @@ class UserControllerSpec extends BaseSpecification {
 
     def "Test update user's information"() {
         given:
-        def updateDto = new UserUpdateDto(1, "John", "John",
+        def updateDto = new UserUpdateRequest(1, "John", "John",
                 "+998998653816", "", "jones", "zuh@gmail.team", Lang.UZ)
         def requestBody = new ObjectMapper().writeValueAsString(updateDto)
         def token = UUID.randomUUID().toString()
@@ -131,7 +131,7 @@ class UserControllerSpec extends BaseSpecification {
         ).andReturn()
 
         then:
-        1 * userService.update(_ as UserUpdateDto) >> successResponse
+        1 * userService.update(_ as UserUpdateRequest) >> successResponse
 
         def response = result.response
         response.status == HttpStatus.OK.value()

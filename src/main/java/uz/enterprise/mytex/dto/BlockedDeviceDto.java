@@ -37,6 +37,7 @@ public class BlockedDeviceDto {
         this.blockedDeviceId = blockedDevice.getId();
         this.deviceId = blockedDevice.getDevice().getId();
         this.status = blockedDevice.getStatus();
+        this.blockedBy = getBlockedByName(blockedDevice.getBlockedBy());
         this.unblockDateTime = getFormatTime(blockedDevice.getUpdatedAt());
         this.blockedDateTime = getFormatTime(blockedDevice.getCreatedAt());
         this.reason = blockedDevice.getReason();
@@ -53,6 +54,10 @@ public class BlockedDeviceDto {
     }
 
     public String getOwner(User user) {
+        return user.getFirstName() + " " + user.getLastName();
+    }
+
+    public String getBlockedByName(User user) {
         return user.getFirstName() + " " + user.getLastName();
     }
 }

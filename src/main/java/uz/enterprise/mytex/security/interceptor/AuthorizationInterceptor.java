@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.Objects;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -30,16 +31,19 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Object handler) throws Exception {
+                             @NonNull HttpServletResponse response,
+                             @NonNull Object handler) {
         var token = request.getHeader(AppConstants.TOKEN);
         var deviceId = request.getHeader(AppConstants.DEVICE_ID);
         var requestUri = request.getRequestURI();
 
-        if (headersExist(token, deviceId)){
+        if (headersExist(token, deviceId)) {
             CustomUserDetails user = SecurityHelper.getCurrentUser();
             if (fraudService.isDeviceBlockedByDeviceId(deviceId)) {
                 throw new CustomException(responseHelper.deviceBlocked());
+            }
+            if (fraudService.isAccountBlockedByUserId(Objects.requireNonNull(user).getId())) {
+                throw new CustomException(responseHelper.accountBlocked());
             }
             Session session = sessionService.getSessionByUserId(user.getId());
             if (!session.getToken().equals(token)) {
@@ -60,7 +64,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private boolean headersExist(String token, String deviceId){
+    private boolean headersExist(String token, String deviceId) {
         return Objects.nonNull(token) && Objects.nonNull(deviceId);
     }
 }

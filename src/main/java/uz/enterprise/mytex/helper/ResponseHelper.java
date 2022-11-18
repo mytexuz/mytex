@@ -73,6 +73,10 @@ public class ResponseHelper {
         return prepareResponse(MessageKey.DEVICE_NOT_BLOCKED, HttpStatus.BAD_REQUEST);
     }
 
+    public ResponseEntity<ResponseData<String>> accountNotBlocked() {
+        return prepareResponse(MessageKey.ACCOUNT_NOT_BLOCKED, HttpStatus.BAD_REQUEST);
+    }
+
     public ResponseEntity<ResponseData<String>> incorrectPassword() {
         return prepareResponse(MessageKey.INCORRECT_PASSWORD, HttpStatus.UNAUTHORIZED);
     }
@@ -109,8 +113,16 @@ public class ResponseHelper {
         return prepareResponse(blockedBy, MessageKey.DEVICE_ALREADY_BLOCKED);
     }
 
+    public ResponseEntity<Object> accountAlreadyBlocked(String blockedBy) {
+        return prepareResponse(blockedBy, MessageKey.ACCOUNT_ALREADY_BLOCKED);
+    }
+
     public ResponseEntity<Object> deviceAlreadyUnBlocked(String unblockedBy) {
         return prepareResponse(unblockedBy, MessageKey.DEVICE_ALREADY_UNBLOCKED);
+    }
+
+    public ResponseEntity<Object> accountAlreadyUnBlocked(String unblockedBy) {
+        return prepareResponse(unblockedBy, MessageKey.ACCOUNT_ALREADY_UNBLOCKED);
     }
 
     private ResponseEntity<ResponseData<String>> prepareResponse(String key, HttpStatus status) {

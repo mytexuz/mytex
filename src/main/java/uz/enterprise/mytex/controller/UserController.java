@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uz.enterprise.mytex.dto.ChangeLangDto;
 import uz.enterprise.mytex.dto.ChangeStatusDto;
 import uz.enterprise.mytex.dto.RegisterDto;
-import uz.enterprise.mytex.dto.UserUpdateDto;
+import uz.enterprise.mytex.dto.request.UserUpdateRequest;
 import uz.enterprise.mytex.dto.request.SearchRequest;
 import uz.enterprise.mytex.service.UserService;
 
@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/update", produces = "application/json")
-    public ResponseEntity<?> update(@Valid @RequestBody UserUpdateDto userDto) {
+    public ResponseEntity<?> update(@Valid @RequestBody UserUpdateRequest userDto) {
         return userService.update(userDto);
     }
 

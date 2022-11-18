@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.enterprise.mytex.dto.request.DeviceCreateRequest;
 
 @Getter
 @Setter
@@ -19,5 +20,5 @@ public class LoginDto {
 
     @NotBlank(message = "auth.password.not.valid")
     private String password;
-    private DeviceCreateDto device;
+    private DeviceCreateRequest device;
 }

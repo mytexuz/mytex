@@ -13,6 +13,7 @@ import uz.enterprise.mytex.dto.*
 import uz.enterprise.mytex.dto.request.FilterRequest
 import uz.enterprise.mytex.dto.request.SearchRequest
 import uz.enterprise.mytex.dto.request.SortRequest
+import uz.enterprise.mytex.dto.request.UserUpdateRequest
 import uz.enterprise.mytex.dto.response.PagedResponse
 import uz.enterprise.mytex.dto.response.ResponseData
 import uz.enterprise.mytex.dto.response.UserResponse
@@ -223,7 +224,7 @@ class UserServiceSpec extends BaseSpecification {
 
     def "User service update user with #photo -> success"() {
         given:
-        def updateDto = random.nextObject(UserUpdateDto)
+        def updateDto = random.nextObject(UserUpdateRequest)
 
         updateDto.photo = ""
 
@@ -255,7 +256,7 @@ class UserServiceSpec extends BaseSpecification {
 
     def "User service update user without #photo -> success"() {
         given:
-        def updateDto = random.nextObject(UserUpdateDto)
+        def updateDto = random.nextObject(UserUpdateRequest)
 
         def user = random.nextObject(User)
 
@@ -285,7 +286,7 @@ class UserServiceSpec extends BaseSpecification {
 
     def "User service update user  -> failed"() {
         given:
-        def updateDto = random.nextObject(UserUpdateDto)
+        def updateDto = random.nextObject(UserUpdateRequest)
         def loc = new Localization(1, "user.does.not.exists", Lang.UZ, "User does not exist!")
 
         def responseData = new ResponseData<>(null, loc.message)
