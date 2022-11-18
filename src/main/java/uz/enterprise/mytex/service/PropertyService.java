@@ -2,6 +2,7 @@ package uz.enterprise.mytex.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import uz.enterprise.mytex.constant.AppConstants;
 import uz.enterprise.mytex.entity.Property;
 import uz.enterprise.mytex.repository.PropertyRepository;
 
@@ -21,6 +22,10 @@ public class PropertyService {
         return propertyRepository.findByKey(key)
                 .map(Property::getValue)
                 .orElse("");
+    }
+
+    public String getGithubToken(){
+        return getValue(AppConstants.GITHUB_TOKEN);
     }
 
     public String getMinioAccessKey(){

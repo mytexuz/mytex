@@ -55,7 +55,6 @@ class MediaServiceSpec extends BaseSpecification {
 
         actual.statusCode == HttpStatus.OK
         actual.body != null
-
     }
 
 }

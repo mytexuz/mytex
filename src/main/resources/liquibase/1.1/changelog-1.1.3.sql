@@ -33,7 +33,8 @@ values ('TB_USER', 'users', 0, current_timestamp),
        ('min.io.endpoint', 'https://bucket.minio.asgardia.uz', 0, current_timestamp),
        ('min.io.access.key', '1PRk7eKCS7pv0jq2', 0, current_timestamp),
        ('min.io.access.secret.key', 'y6cQjLBoNiSiIpkyW4s2nJZsxtlrrSzd', 0, current_timestamp),
-       ('min.io.bucket.name', 'mytex', 0, current_timestamp)
+       ('min.io.bucket.name', 'mytex', 0, current_timestamp),
+       ('github.auth.token', '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', 0, current_timestamp)
 
 
 
