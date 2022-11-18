@@ -175,6 +175,27 @@ values ('user.id.not.null', 'EN',
        ('user.id.not.null', 'RU',
         'Идентификатор пользователя не может быть нулевым');
 insert into public.localizations (key, lang, message)
+values ('account.already.blocked', 'EN',
+        'Account is already blocked by - %s'),
+       ('account.already.blocked', 'UZ',
+        'Hisob allaqachon - %s - tomonidan bloklangan'),
+       ('account.already.blocked', 'RU',
+        'Аккаунт уже заблокировано - %s');
+insert into public.localizations (key, lang, message)
+values ('account.already.unblocked', 'EN',
+        'The account is already unblocked by - %s'),
+       ('account.already.unblocked', 'UZ',
+        'Hisob allaqachon - %s - tomonidan blokdan chiqarilgan'),
+       ('account.already.unblocked', 'RU',
+        'Аккаунт уже разблокировано - %s');
+insert into public.localizations (key, lang, message)
+values ('account.not.blocked', 'EN',
+        'The Account is not locked yet'),
+       ('account.not.blocked', 'UZ',
+        'Hisob hali qulflanmagan'),
+       ('account.not.blocked', 'RU',
+        'Аккаунт еще не заблокированоо');
+insert into public.localizations (key, lang, message)
 values ('operation.failed', 'EN',
         'Operation failed'),
        ('operation.failed', 'UZ',

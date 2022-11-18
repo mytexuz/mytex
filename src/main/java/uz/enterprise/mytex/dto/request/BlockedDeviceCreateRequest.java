@@ -1,4 +1,4 @@
-package uz.enterprise.mytex.dto;
+package uz.enterprise.mytex.dto.request;
 
 
 import javax.validation.constraints.NotNull;
@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.enterprise.mytex.enums.BlockingStatus;
 import uz.enterprise.mytex.enums.Period;
 
 @Getter
@@ -16,7 +15,7 @@ import uz.enterprise.mytex.enums.Period;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BlockedDeviceCreateDto {
+public class BlockedDeviceCreateRequest {
     @NotNull(message = "blocked.device.id.not.null")
     private Long deviceId;
     private String reason;

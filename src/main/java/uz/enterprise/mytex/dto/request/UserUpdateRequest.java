@@ -1,4 +1,4 @@
-package uz.enterprise.mytex.dto;
+package uz.enterprise.mytex.dto.request;
 
 
 import javax.validation.constraints.Email;
@@ -18,7 +18,7 @@ import uz.enterprise.mytex.enums.Lang;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserUpdateDto {
+public class UserUpdateRequest {
     @NotNull(message = "user.id.not.null")
     private Long id;
 

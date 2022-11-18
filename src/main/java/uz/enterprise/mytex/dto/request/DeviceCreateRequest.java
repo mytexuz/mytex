@@ -1,4 +1,4 @@
-package uz.enterprise.mytex.dto;
+package uz.enterprise.mytex.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import uz.enterprise.mytex.enums.DeviceType;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DeviceCreateDto {
+public class DeviceCreateRequest {
     private DeviceType deviceType;
     private String macAddress;
     private String userAgent;

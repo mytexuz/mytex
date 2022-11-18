@@ -18,6 +18,9 @@ public interface MessageKey {
     String MAX_SIZE = "max.size.file";
     String DEVICE_ALREADY_BLOCKED = "device.already.blocked";
     String DEVICE_ALREADY_UNBLOCKED = "device.already.unblocked";
+    String ACCOUNT_ALREADY_BLOCKED = "account.already.blocked";
+    String ACCOUNT_ALREADY_UNBLOCKED = "account.already.unblocked";
     String DEVICE_NOT_BLOCKED = "device.not.blocked";
     String OPERATION_FAILED = "operation.failed";
+    String ACCOUNT_NOT_BLOCKED = "account.not.blocked";
 }

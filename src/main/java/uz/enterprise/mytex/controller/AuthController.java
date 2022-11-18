@@ -27,4 +27,9 @@ public class AuthController {
     public ResponseEntity<?> resetPassword(@RequestParam("usernameOrEmail") String usernameOrEmail) {
         return userService.resetPassword(usernameOrEmail);
     }
+
+    @PostMapping(value = "/logout")
+    public ResponseEntity<?> logout() {
+        return userService.logout();
+    }
 }
