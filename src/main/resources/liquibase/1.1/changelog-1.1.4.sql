@@ -174,3 +174,10 @@ values ('user.id.not.null', 'EN',
         'Foydalanuvchi identifikatori null bo''lishi mumkin emas'),
        ('user.id.not.null', 'RU',
         'Идентификатор пользователя не может быть нулевым');
+insert into public.localizations (key, lang, message)
+values ('operation.failed', 'EN',
+        'Operation failed'),
+       ('operation.failed', 'UZ',
+        'Amaliyot muvafaqqiyatsiz yakunlandi'),
+       ('operation.failed', 'RU',
+        'Операция не удалась');

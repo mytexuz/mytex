@@ -27,10 +27,14 @@ values ('TB_USER', 'users', 0, current_timestamp),
        ('ACCOUNT_PENDING', 'auth.account.pending', 0, current_timestamp),
        ('ACCOUNT_BLOCKED', 'auth.account.blocked', 0, current_timestamp),
        ('FORBIDDEN', 'forbidden', 0, current_timestamp),
-       ('FILE_UPLOAD_PATH', './docs/test', 0, current_timestamp),
        ('mytex.telegram.monitoring.bot.token', '5773787580:AAF4-5c3btUdLDvdx85In6zwLZHhejbvbIA', 0, current_timestamp),
        ('mytex.telegram.monitoring.bot.username', '@atp_monitoring_bot', 0, current_timestamp),
-       ('mytex.telegram.monitoring.bot.chat.id', '-807672657', 0, current_timestamp)
+       ('mytex.telegram.monitoring.bot.chat.id', '-807672657', 0, current_timestamp),
+       ('min.io.endpoint', 'https://bucket.minio.asgardia.uz', 0, current_timestamp),
+       ('min.io.access.key', '1PRk7eKCS7pv0jq2', 0, current_timestamp),
+       ('min.io.access.secret.key', 'y6cQjLBoNiSiIpkyW4s2nJZsxtlrrSzd', 0, current_timestamp),
+       ('min.io.bucket.name', 'mytex', 0, current_timestamp)
+
 
 
 

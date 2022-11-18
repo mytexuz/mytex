@@ -20,7 +20,7 @@ class MediaServiceSpec extends BaseSpecification {
     private String mockFolderPath = "./media"
 
     void setup() {
-        mediaService = new MediaService(responseHelper, propertyService)
+        mediaService = new MediaService(responseHelper, propertyService, minioClient)
         File mockFolder = new File(mockFolderPath)
         if (!mockFolder.exists()) {
             mockFolder.mkdir()

@@ -19,4 +19,5 @@ public interface MessageKey {
     String DEVICE_ALREADY_BLOCKED = "device.already.blocked";
     String DEVICE_ALREADY_UNBLOCKED = "device.already.unblocked";
     String DEVICE_NOT_BLOCKED = "device.not.blocked";
+    String OPERATION_FAILED = "operation.failed";
 }
