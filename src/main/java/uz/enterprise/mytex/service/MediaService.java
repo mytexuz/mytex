@@ -49,7 +49,8 @@ public class MediaService {
 
     public ResponseEntity<?> upload(MultipartFile file) throws FileException{
         try {
-            return responseHelper.success(Map.of("filePath", uploadResource(file)));
+            String filePath = uploadResource(file);
+            return responseHelper.success(Map.of("filePath", filePath));
         } catch (Exception e) {
             log.error("failed to upload file: {}", getStacktrace(e));
             throw new FileException(responseHelper.operationFailed());
@@ -67,7 +68,7 @@ public class MediaService {
     }
 
     public String uploadResource(MultipartFile file) throws Exception {
-        var bucket = propertyService.getValue(AppConstants.BUCKET);
+        String bucket = propertyService.getValue(AppConstants.BUCKET);
         var objectName = UUID.randomUUID() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
         minioClient.putObject(
                 PutObjectArgs

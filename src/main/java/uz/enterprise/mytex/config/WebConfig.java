@@ -21,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(authorizationInterceptor);
     }
 
-    @Bean
+    @Bean(name = "minioClient")
     public MinioClient minioClient(){
         return MinioClient
                 .builder()
